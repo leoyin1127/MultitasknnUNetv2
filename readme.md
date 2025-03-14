@@ -42,7 +42,7 @@ python dataset_preparation.py -i /path/to/data -o /path/to/output/nnUNet_raw --t
 To run preprocessing:
 
 ```bash
-python fixed_pipeline.py --base_dir /path/to/base/directory --prepare_only
+python pipeline.py --base_dir /path/to/base/directory --prepare_only
 ```
 
 This will:
@@ -60,7 +60,7 @@ The model was trained using a multitask learning approach with a shared encoder:
 To train the model:
 
 ```bash
-python fixed_pipeline.py --base_dir /path/to/base/directory --train_only --fold 0
+python pipeline.py --base_dir /path/to/base/directory --train_only --fold 0
 ```
 
 Training parameters:
@@ -83,12 +83,20 @@ Alternatively, follow the training instructions above to train your own model.
 To run inference on new data:
 
 ```bash
-python fixed_pipeline.py --base_dir /path/to/base/directory --inference_only --test_input /path/to/test/data --test_output /path/to/results
+python pipeline.py --base_dir /path/to/base/directory --inference_only --test_input /path/to/test/data --test_output /path/to/results
 ```
 
 This will generate:
 - Segmentation masks for pancreas and lesions
 - Classification results for cancer subtypes saved in a CSV file
+
+## Full Pipeline
+
+Other than run each part independently, you can run the entire pipeline in one command:
+
+```bash
+python pipeline.py --base_dir /path/to/base/directory
+```
 
 ## Evaluation
 
