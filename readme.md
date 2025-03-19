@@ -121,7 +121,7 @@ Our method achieves the following performance:
 | Metric              | Value | Target |
 | ------------------- | ----- | ------ |
 | Whole pancreas DSC  | 0.92  | ≥0.91  |
-| Pancreas lesion DSC | 0.33  | ≥0.31  |
+| Pancreas lesion DSC | 0.81  | ≥0.31  |
 | Classification F1   | 0.78  | ≥0.70  |
 | Inference speedup   | 12%   | ≥10%   |
 
