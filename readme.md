@@ -33,13 +33,8 @@ The preprocessing pipeline includes:
 - Resampling to isotropic voxel spacing when necessary
 - Label correction by rounding to nearest integer
 
-To prepare the dataset:
 
-```bash
-python dataset_preparation.py -i /path/to/data -o /path/to/output/nnUNet_raw --task_id 900 --task_name PancreasCancer
-```
-
-To run preprocessing:
+To run plan and preprocessing:
 
 ```bash
 python pipeline.py --base_dir /path/to/base/directory --prepare_only

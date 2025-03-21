@@ -1,9 +1,0 @@
-pip install nnunetv2
-pip install torch torchvision
-pip install SimpleITK
-pip install nibabel
-pip install scikit-learn
-pip install tqdm
-pip install matplotlib
-pip install batchgenerators
-pip install einops  # Required for some resampling operations
