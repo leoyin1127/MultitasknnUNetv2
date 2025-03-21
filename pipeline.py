@@ -355,9 +355,8 @@ trainer = MultitasknnUNetTrainer(
     dataset_json=dataset_json,
 )
 
-# Modify num_epochs and early_stopping_patience to avoid excessive training
-trainer.num_epochs = 150  # Set a reasonable limit (original 300 may be too much)
-trainer.early_stopping_patience = 20  # Stop after 20 epochs without improvement (original 30)
+trainer.num_epochs = 500  # Set a reasonable limit (original 300 may be too much)
+trainer.early_stopping_patience = 100  # Stop after 20 epochs without improvement (original 30)
 
 # Run training
 trainer.run_training()
