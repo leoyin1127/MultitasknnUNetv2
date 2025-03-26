@@ -1,6 +1,6 @@
 # Multitask Deep Learning for Pancreatic Cancer Segmentation and Classification
 
-This repository is the implementation of a multitask deep learning model for pancreatic cancer segmentation and classification in 3D CT scans by Leo Yin
+This repository is the implementation of a multitask deep learning model for pancreatic cancer segmentation and classification in 3D CT scans by Shuolin (leo) Yin
 
 ## Environments and Requirements
 
@@ -57,19 +57,25 @@ To train the model:
 ```bash
 python pipeline.py --base_dir /path/to/base/directory --train_only --fold 0
 ```
+or you can directly use the google colab link to run the entire pipeline vie: https://colab.research.google.com/drive/1NeL9g08eryKhwAKzw3w7ad9F0kPwEuWA?usp=sharing
+but before that, make sure the data is ready in your drive accoding to the env path setups
 
 Training parameters:
-- Loss weighting: 70% segmentation, 30% classification
+- Loss weighting: Phase-dependent (90% segmentation, 10% classification in early phase, gradually balanced untill 50/50)
 - Batch size: Determined automatically by nnUNet
-- Optimizer: SGD with momentum
-- Learning rate: Initially 0.01, with polynomial decay
-- Max epochs: 300
-- Early stopping patience: 30 epochs
+- Optimizer: AdamW with weight decay (3e-5)
+- Learning rate: Initially 1e-4, with polynomial decay
+- Max epochs: 500
+- Early stopping patience: 100 epochs
 - Data augmentation: Standard nnUNet augmentation pipeline
+- Training phases:
+  - Phase 1 (first 20 epochs): Segmentation priority with minimal classification
+  - Phase 2: Combined training with balanced focus
+- Class balancing: Inverse frequency weighting with smoothing
 
 ## Trained Models
 
-You can download our trained model from [link to model].
+You can download our trained model from https://drive.google.com/file/d/1CiHvhZEsem6wnfUSQm5RJ5gWl1JH48eE/view?usp=sharing.
 
 Alternatively, follow the training instructions above to train your own model.
 
@@ -105,9 +111,7 @@ Evaluation metrics used in this project:
 
 To evaluate results:
 
-```bash
-python evaluation.py --pred_path /path/to/predictions --gt_path /path/to/ground_truth
-```
+Since the GT for the test data is not provided, thus the evaluation might not be applicable
 
 ## Results
 
@@ -122,12 +126,7 @@ Our method achieves the following performance:
 
 The model exhibits some fluctuation in classification F1 score during training due to the multitask learning approach, with competing objectives between segmentation and classification tasks.
 
-## Implementation Challenges and Solutions
 
-A key challenge was ensuring validation data was properly preprocessed by nnUNet. We solved this by:
-1. Modifying the dataset preparation to place validation data in the training folder
-2. Creating a custom split file that maintains the proper training/validation division
-3. Explicitly including validation cases in preprocessing
 
 ## Acknowledgement
 
