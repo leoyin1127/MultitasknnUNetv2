@@ -348,7 +348,7 @@ class MultitasknnUNetTrainer(nnUNetTrainer):
 
         # Initialize grad scaler for mixed precision training if using CUDA
         if self.device.type == 'cuda':
-            self.grad_scaler = torch.cuda.amp.GradScaler()
+            self.grad_scaler = torch.amp.GradScaler('cuda')
 
         self.print_to_log_file("Multitask initialization complete.")
 
@@ -733,7 +733,7 @@ class MultitasknnUNetTrainer(nnUNetTrainer):
         """Process validation outputs and calculate comprehensive metrics."""
         # Call parent's method for segmentation metrics
         super().on_validation_epoch_end(val_outputs)
-        
+
         # Collect classification predictions and targets
         all_preds = []
         all_targets = []
@@ -743,7 +743,7 @@ class MultitasknnUNetTrainer(nnUNetTrainer):
                 all_preds.extend(output['cls_pred'].tolist() if hasattr(output['cls_pred'], 'tolist') else [output['cls_pred']])
                 all_targets.extend(output['cls_target'].tolist() if hasattr(output['cls_target'], 'tolist') else [output['cls_target']])
 
-            
+
 
         # Calculate classification metrics if we have predictions
         if all_preds and all_targets and len(all_preds) == len(all_targets):
@@ -845,7 +845,7 @@ class MultitasknnUNetTrainer(nnUNetTrainer):
             cls_weight = 0.1
         else:
             # Gradually balance as training progresses
-            seg_weight = max(0.5, 0.9 - 0.4 * (current_epoch_number - self.segmentation_phase_epochs) / (100 - self.segmentation_phase_epochs))
+            seg_weight = max(0.5, 0.9 - 0.4 * (current_epoch_number - self.segmentation_phase_epochs) / (50 - self.segmentation_phase_epochs))
             cls_weight = 1.0 - seg_weight
 
         combined_metric = (current_dice * seg_weight + cls_f1 * cls_weight)

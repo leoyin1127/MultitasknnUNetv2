@@ -166,17 +166,17 @@ def prepare_task(input_folder: str, output_folder: str, task_id: int, task_name:
     json_dict['channel_names'] = {
         "0": "CT"  # Assuming this is CT data
     }
-    
+
     # Replace the labels section with region-based configuration
     # In prepare_task function, replace the labels part:
     json_dict['labels'] = OrderedDict()  # Use OrderedDict to maintain order
     json_dict['labels']["background"] = 0
     json_dict['labels']["whole_pancreas"] = [1, 2]  # First region (whole pancreas)
     json_dict['labels']["pancreas_lesion"] = 2      # Second region (lesion)
-        
-    # Add regions_class_order 
+
+    # Add regions_class_order
     json_dict['regions_class_order'] = [1, 2]  # Place label 1 first, then label 2
-    
+
     # [Rest of the existing code...]
     json_dict['numTraining'] = len(all_identifiers)
     json_dict['numTest'] = len(test_identifiers)

@@ -408,343 +408,304 @@ def copy_dataset_json_to_results(task_id, configuration, trainer, plans):
         return False
 
 
-def perform_inference_direct(task_id, input_folder, output_folder, configuration="3d_fullres",
-                             trainer="MultitasknnUNetTrainer", plans="nnUNetResEncUNetMPlans", folds=None):
+
+
+def run_optimized_inference(
+    task_id=900,
+    test_folder="/content/gdrive/MyDrive/PancreasCancerFinal/dataset/test",
+    output_folder="/content/gdrive/MyDrive/PancreasCancerFinal/output/inference_results",
+    fold=0
+):
     """
-    Run inference directly using the trained model.
-
-    Args:
-        task_id: Task/dataset ID
-        input_folder: Path to input images for inference
-        output_folder: Path where predictions will be saved
-        configuration: Model configuration (e.g., '3d_fullres')
-        trainer: Trainer class name
-        plans: Plans identifier
-        folds: List of folds to use for ensemble (default: [0])
-
-    Returns:
-        bool: True if inference was successful
+    Fixed whole-image inference with proper padding to handle
+    UNet architecture requirements for divisibility
     """
     import os
-    import glob
+    import time
     import torch
+    import torch.nn.functional as F
     import numpy as np
-    import nibabel as nib
-    from batchgenerators.utilities.file_and_folder_operations import join, load_json
+    import SimpleITK as sitk
+    from batchgenerators.utilities.file_and_folder_operations import join, maybe_mkdir_p
+    from tqdm import tqdm
+    import csv
+    import matplotlib.pyplot as plt
+    import shutil
 
-    # Disable PyTorch dynamic compilation errors
-    import torch._dynamo
-    torch._dynamo.config.suppress_errors = True
+    torch._dynamo.disable()
 
-    # Import required nnU-Net components
-    from nnunetv2.paths import nnUNet_results, nnUNet_raw, nnUNet_preprocessed
-    from nnunetv2.imageio.reader_writer_registry import determine_reader_writer_from_dataset_json
+    print("Starting fixed whole-image inference for A100 GPU...")
+    start_time = time.time()
 
-    # Add current directory to path to find custom modules
-    import sys
-    sys.path.append(os.getcwd())
+    # Create output directories
+    maybe_mkdir_p(output_folder)
+    local_output = "/tmp/inference_results"
+    maybe_mkdir_p(local_output)
 
-    # Import our custom trainer
-    try:
-        from multitask_trainer import MultitasknnUNetTrainer
-    except ImportError:
-        print("Error: Could not import MultitasknnUNetTrainer. Make sure the file is in the current directory.")
-        return False
-
-    print("Setting up for inference...")
-
-    # Use fold 0 if none provided
-    if folds is None:
-        folds = [0]
-
-    # Set up device
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    # Get device - force CUDA for A100
+    device = torch.device("cuda")
     print(f"Using device: {device}")
 
-    # Prepare paths
-    dataset_name = f"Dataset{task_id:03d}_PancreasCancer"
-    model_folder = join(nnUNet_results, dataset_name, f"{trainer}__{plans}__{configuration}")
-    fold_dirs = [join(model_folder, f"fold_{fold}") for fold in folds]
 
-    # Verify folders exist
-    if not os.path.exists(model_folder):
-        print(f"Error: Model folder not found: {model_folder}")
-        return False
 
-    for fold_dir in fold_dirs:
-        if not os.path.exists(fold_dir):
-            print(f"Error: Fold directory not found: {fold_dir}")
-            return False
+    # Setup paths
+    nnunet_results = os.environ.get("nnUNet_results", "/content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_results")
+    model_folder = join(nnunet_results, f"Dataset{task_id:03d}_PancreasCancer/MultitasknnUNetTrainer__nnUNetResEncUNetMPlans__3d_fullres")
+    fold_dir = join(model_folder, f"fold_{fold}")
 
-    print(f"Model folder: {model_folder}")
-    print(f"Using folds: {folds}")
+    # Import necessary modules
+    import sys
+    sys.path.append(os.getcwd())
+    from multitask_trainer import MultitasknnUNetTrainer
+    from batchgenerators.utilities.file_and_folder_operations import load_json
 
-    # Load dataset.json
+    # Load configuration files
+    print("Loading configuration files...")
     dataset_json_file = join(model_folder, "dataset.json")
-    if not os.path.exists(dataset_json_file):
-        dataset_json_file = join(nnUNet_raw, dataset_name, "dataset.json")
-
-    if not os.path.exists(dataset_json_file):
-        print(f"Error: dataset.json not found in {model_folder} or {join(nnUNet_raw, dataset_name)}")
-        return False
-
-    dataset_json = load_json(dataset_json_file)
-    print(f"Found dataset.json: {dataset_json_file}")
-
-    # Load plans.json
     plans_file = join(model_folder, "plans.json")
-    if not os.path.exists(plans_file):
-        print(f"Error: plans.json not found: {plans_file}")
-        return False
 
-    plans = load_json(plans_file)
-    print("Loaded plans.json")
-
-    # Determine expected patch size for model
-    expected_patch_size = None
-    if "patch_size" in plans:
-        expected_patch_size = tuple(plans["patch_size"])
-    elif "plans_per_stage" in plans and "0" in plans["plans_per_stage"] and "patch_size" in plans["plans_per_stage"]["0"]:
-        expected_patch_size = tuple(plans["plans_per_stage"]["0"]["patch_size"])
-    elif "configurations" in plans and configuration in plans["configurations"] and "patch_size" in plans["configurations"][configuration]:
-        expected_patch_size = tuple(plans["configurations"][configuration]["patch_size"])
-    else:
-        expected_patch_size = (120, 80, 112)
-        print(f"Warning: expected patch size not found in plans; using fallback: {expected_patch_size}")
-
-    print(f"Using expected patch size: {expected_patch_size}")
-
-    # Initialize the trainer and load weights
     try:
-        print("Initializing trainer...")
-        trainer_instance = MultitasknnUNetTrainer(
-            plans=plans,
-            configuration=configuration,
-            fold=folds[0],
-            dataset_json=dataset_json,
-        )
-        trainer_instance.initialize()
+        dataset_json = load_json(dataset_json_file)
+        plans = load_json(plans_file)
+    except:
+        # Fallback paths
+        nnunet_raw = os.environ.get("nnUNet_raw", "/content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_raw")
+        nnunet_preprocessed = os.environ.get("nnUNet_preprocessed", "/content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed")
 
-        # Find best checkpoint file
-        checkpoint_file = join(fold_dirs[0], "checkpoint_final.pth")
-        if not os.path.exists(checkpoint_file):
-            checkpoint_candidates = glob.glob(join(fold_dirs[0], "checkpoint_*.pth"))
-            if len(checkpoint_candidates) == 0:
-                print(f"Error: No checkpoint files found in {fold_dirs[0]}")
-                return False
-            checkpoint_file = sorted(checkpoint_candidates)[-1]
+        dataset_name = f"Dataset{task_id:03d}_PancreasCancer"
+        dataset_json_file = join(nnunet_raw, dataset_name, "dataset.json")
+        plans_file = join(nnunet_preprocessed, dataset_name, "nnUNetResEncUNetMPlans.json")
 
-        print(f"Using checkpoint: {checkpoint_file}")
+        print(f"Using fallback paths: {dataset_json_file}, {plans_file}")
+        dataset_json = load_json(dataset_json_file)
+        plans = load_json(plans_file)
 
-        # Load model weights
-        try:
-            print("Loading model weights...")
-            checkpoint = torch.load(checkpoint_file, map_location=device)
-            if "network_weights" in checkpoint:
-                weights = checkpoint["network_weights"]
-            else:
-                weights = checkpoint
-            trainer_instance.network.load_state_dict(weights)
-        except Exception as e:
-            print(f"Error loading checkpoint with primary method: {e}")
-            print("Trying alternative loading method...")
+    # Initialize trainer
+    print("Initializing trainer...")
+    trainer = MultitasknnUNetTrainer(
+        plans=plans,
+        configuration="3d_fullres",
+        fold=fold,
+        dataset_json=dataset_json,
+        device=device
+    )
 
-            try:
-                checkpoint = torch.load(checkpoint_file, map_location=device)
-                if isinstance(checkpoint, dict) and "state_dict" in checkpoint:
-                    state_dict = checkpoint["state_dict"]
-                    if all(k.startswith('module.') for k in state_dict.keys()):
-                        state_dict = {k[7:]: v for k, v in state_dict.items()}
-                    trainer_instance.network.load_state_dict(state_dict)
-                else:
-                    print("Failed to load checkpoint with alternative method.")
-                    return False
-            except Exception as e2:
-                print(f"Error loading checkpoint with alternative method: {e2}")
-                return False
+    # Initialize network
+    print("Initializing network...")
+    trainer.initialize()
 
-        trainer_instance.network.to(device)
-        trainer_instance.network.eval()
-        print("Model loaded successfully")
+    # Load checkpoint with error handling
+    checkpoint_file = join(fold_dir, "checkpoint_best.pth")
+    if not os.path.exists(checkpoint_file):
+        checkpoint_file = join(fold_dir, "checkpoint_final.pth")
 
-        # Create output directory
-        os.makedirs(output_folder, exist_ok=True)
+    print(f"Loading checkpoint: {checkpoint_file}")
 
-        def preprocess_image(image_file):
-            """Load and preprocess an image for inference"""
-            import SimpleITK as sitk
+    try:
+        # FIX: Add all numpy-related types to safe globals
+        import torch.serialization
+        import numpy as np
+        from numpy import dtype, ndarray, float32, float64, int64, int32, uint8, bool_
 
-            # Get appropriate reader
-            reader_writer_class = determine_reader_writer_from_dataset_json(dataset_json, image_file)
-            rw = reader_writer_class()
+        # Add numpy types to safe globals
+        torch.serialization.add_safe_globals([
+            dtype, ndarray, float32, float64, int32, int64, uint8, bool_,
+            np.dtype, np.ndarray, np.float32, np.float64, np.int32, np.int64, np.uint8, np.bool_
+        ])
 
-            print(f"Reading image: {image_file}")
-            image_sitk, props = rw.read_images([image_file])
+        # Try with weights_only=False explicitly
+        checkpoint = torch.load(checkpoint_file, map_location=device, weights_only=False)
 
-            # Convert to numpy array
-            if isinstance(image_sitk[0], np.ndarray):
-                image_npy = image_sitk[0]
-            else:
-                try:
-                    image_npy = sitk.GetArrayFromImage(image_sitk[0])
-                except AttributeError:
-                    image_npy = image_sitk[0]
+        if isinstance(checkpoint, dict) and "network_weights" in checkpoint:
+            trainer.network.load_state_dict(checkpoint["network_weights"])
+        else:
+            trainer.network.load_state_dict(checkpoint)
 
-            # Normalize
-            image_npy = image_npy.astype(np.float32)
-            mean = np.mean(image_npy)
-            std = np.std(image_npy)
-            image_npy = (image_npy - mean) / (std + 1e-8)
+        print("Checkpoint loaded successfully")
+    except Exception as e:
+        print(f"Error loading checkpoint: {e}")
+        raise RuntimeError("Failed to load checkpoint - cannot proceed")
 
-            # Prepare dimensions
-            image_npy = image_npy[None, None]  # Add batch and channel dimensions
+    # Set network to evaluation mode
+    trainer.network.eval()
 
-            # Resize if needed (very simplified - real implementation should handle this better)
-            current_shape = image_npy.shape[2:]
-            desired = expected_patch_size
+    # Enable fast inference mode if available
+    if hasattr(trainer.network, 'enable_fast_inference'):
+        trainer.network.enable_fast_inference()
+        print("Enabled fast inference mode")
 
-            # If shapes don't match, resize (simple approach for demo)
-            if current_shape != desired:
-                resized_image = np.zeros((1, 1) + desired, dtype=np.float32)
-                min_shape = [min(c, d) for c, d in zip(current_shape, desired)]
-                slices_orig = (slice(None), slice(None)) + tuple(slice(0, m) for m in min_shape)
-                slices_new = (slice(None), slice(None)) + tuple(slice(0, m) for m in min_shape)
-                resized_image[slices_new] = image_npy[slices_orig]
-                image_npy = resized_image
+    # Get expected input size from network - IMPORTANT FOR PROPER PADDING
+    if hasattr(trainer.configuration_manager, 'patch_size'):
+        patch_size = trainer.configuration_manager.patch_size
+    else:
+        # Default patch size if not available
+        patch_size = np.array([64, 64, 64])
 
-            return torch.from_numpy(image_npy).to(device), props
+    # Calculate required divisibility for the network
+    # This depends on the number of pooling operations
+    if hasattr(trainer.configuration_manager, 'pool_op_kernel_sizes'):
+        pool_op_kernel_sizes = trainer.configuration_manager.pool_op_kernel_sizes
+        num_pool_per_axis = [len(pool_op_kernel_sizes) for _ in range(3)]
+    else:
+        # Default to 5 downsampling operations if not available
+        num_pool_per_axis = [5, 5, 5]
 
-        def predict_case(image_file, output_file):
-            """Process a single case for prediction"""
-            print(f"Processing {image_file}...")
-            try:
-                # Preprocess the image
-                image_tensor, props = preprocess_image(image_file)
+    # Calculate divisibility factor for each dimension
+    divisibility_factor = [2 ** num_pool for num_pool in num_pool_per_axis]
+    print(f"Network requires input dimensions divisible by: {divisibility_factor}")
 
-                # Run prediction
-                print("Running prediction...")
+    # Find test files
+    if os.path.isdir(test_folder):
+        test_files = [join(test_folder, f) for f in os.listdir(test_folder) if f.endswith('_0000.nii.gz')]
+        if not test_files:
+            test_files = [join(test_folder, f) for f in os.listdir(test_folder) if f.endswith('.nii.gz')]
+    else:
+        test_files = [test_folder]
+
+    print(f"Found {len(test_files)} test files")
+
+    # Process test files
+    classification_results = []
+    class_distributions = [0, 0, 0]  # Count of predictions for each class
+
+    for test_file in tqdm(test_files, desc="Processing test files"):
+        # Get case ID
+        base_name = os.path.basename(test_file)
+        if "_0000.nii.gz" in base_name:
+            case_id = base_name.replace("_0000.nii.gz", "")
+        else:
+            case_id = base_name.replace(".nii.gz", "")
+
+        # Load image
+        img = sitk.ReadImage(test_file)
+        spacing = img.GetSpacing()
+        direction = img.GetDirection()
+        origin = img.GetOrigin()
+
+        # Convert to numpy array
+        image_data = sitk.GetArrayFromImage(img)
+        original_shape = image_data.shape
+
+        # Normalize
+        image_data = image_data.astype(np.float32)
+        mean = np.mean(image_data)
+        std = np.std(image_data)
+        if std > 0:
+            image_data = (image_data - mean) / std
+
+        # Calculate padding to make dimensions divisible
+        padded_shape = []
+        pad_amounts = []
+
+        for i, dim_size in enumerate(image_data.shape):
+            # Calculate needed size (next multiple of divisibility factor)
+            needed_size = int(np.ceil(dim_size / divisibility_factor[i]) * divisibility_factor[i])
+            padded_shape.append(needed_size)
+
+            # Calculate padding (before and after)
+            pad_before = (needed_size - dim_size) // 2
+            pad_after = needed_size - dim_size - pad_before
+            pad_amounts.append((pad_before, pad_after))
+
+        print(f"Case {case_id}: Original shape {original_shape}, padded to {padded_shape}")
+
+        # Pad the image
+        padded_image = np.pad(image_data,
+                             ((pad_amounts[0][0], pad_amounts[0][1]),
+                              (pad_amounts[1][0], pad_amounts[1][1]),
+                              (pad_amounts[2][0], pad_amounts[2][1])),
+                             mode='constant', constant_values=0)
+
+        # Convert to tensor and add batch and channel dimensions
+        image_tensor = torch.from_numpy(padded_image).unsqueeze(0).unsqueeze(0).to(device)
+
+        # Process the whole image at once with mixed precision
+        with torch.no_grad():
+            with torch.autocast(device_type='cuda', dtype=torch.float16):
                 try:
                     # Forward pass
-                    outputs = trainer_instance.network(image_tensor)
+                    output = trainer.network(image_tensor)
 
-                    # Get segmentation output
-                    if isinstance(outputs, tuple) and len(outputs) == 2:
-                        seg_output, cls_output = outputs
+                    # Get segmentation prediction
+                    if isinstance(output, list):
+                        seg_output = output[0]
                     else:
-                        seg_output = outputs
-                        # Get classification output from the network's stored attribute
-                        cls_output = trainer_instance.network.last_classification_output
+                        seg_output = output
+
+                    # Get classification prediction
+                    if hasattr(trainer.network, 'last_classification_output'):
+                        cls_output = trainer.network.last_classification_output
+                        probs = F.softmax(cls_output, dim=1)[0].cpu().numpy()
+                        predicted_class = np.argmax(probs)
+                        confidence = probs[predicted_class]
+                        print(f"Case {case_id}: Classification probabilities = {probs}, predicted class = {predicted_class}, confidence = {confidence:.4f}")
+                    else:
+                        # Try direct classification head access
+                        cls_output = trainer.network.classification_head(trainer.network.bottleneck_features)
+                        probs = F.softmax(cls_output, dim=1)[0].cpu().numpy()
+                        predicted_class = np.argmax(probs)
+                        confidence = probs[predicted_class]
+
+                    # Unpad the segmentation output
+                    seg_output_numpy = torch.argmax(seg_output, dim=1)[0].cpu().numpy()
+
+                    # Unpad to original shape
+                    unpadded_seg = seg_output_numpy[
+                        pad_amounts[0][0]:pad_amounts[0][0]+original_shape[0],
+                        pad_amounts[1][0]:pad_amounts[1][0]+original_shape[1],
+                        pad_amounts[2][0]:pad_amounts[2][0]+original_shape[2]
+                    ]
 
                 except Exception as e:
-                    print(f"Error during primary prediction approach: {e}")
-                    print("Trying alternative approach...")
+                    print(f"Error processing case {case_id}: {e}")
+                    continue
 
-                    try:
-                        # Try using base network directly
-                        seg_output = trainer_instance.network.base_network(image_tensor)
+        # Update class distribution
+        class_distributions[predicted_class] += 1
 
-                        # Get classification output using bottleneck features if available
-                        if hasattr(trainer_instance.network, 'bottleneck_features') and trainer_instance.network.bottleneck_features is not None:
-                            cls_output = trainer_instance.network.classification_head(trainer_instance.network.bottleneck_features)
-                        else:
-                            cls_output = torch.zeros((1, 3), device=device)
-                    except Exception as e2:
-                        print(f"Error during alternative prediction: {e2}")
-                        print("Using fallback approach...")
+        # Convert segmentation to SimpleITK image
+        seg_itk = sitk.GetImageFromArray(unpadded_seg)
+        seg_itk.SetSpacing(spacing)
+        seg_itk.SetDirection(direction)
+        seg_itk.SetOrigin(origin)
 
-                        # Create dummy outputs as fallback
-                        num_heads = getattr(trainer_instance.network.label_manager, 'num_segmentation_heads', 1)
-                        if isinstance(num_heads, int):
-                            num_heads = (num_heads,)
-                        shape = (1,) + num_heads + image_tensor.shape[2:]
-                        seg_output = torch.zeros(shape, device=device)
-                        cls_output = torch.zeros((1, 3), device=device)
+        # Save to output directory
+        local_output_file = join(local_output, f"{case_id}.nii.gz")
+        sitk.WriteImage(seg_itk, local_output_file)
 
-                print(f"Segmentation output shape: {seg_output.shape}")
+        # Add to classification results
+        classification_results.append((f"{case_id}.nii.gz", predicted_class))
 
-                # Convert to segmentation map
-                seg = torch.argmax(seg_output, dim=1).cpu().numpy()[0]
+    # Save classification results
+    csv_path = join(local_output, "subtype_results.csv")
+    with open(csv_path, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Names', 'Subtype'])
+        for name, subtype in classification_results:
+            writer.writerow([name, subtype])
 
-                # Apply transpose if needed (likely in plans.json)
-                transpose_backward = None
-                if "transpose_backward" in plans:
-                    transpose_backward = plans["transpose_backward"]
+    # Visualize class distribution
+    plt.figure(figsize=(10, 6))
+    plt.bar(['Subtype 0', 'Subtype 1', 'Subtype 2'], class_distributions)
+    plt.title('Distribution of Predicted Classes')
+    plt.savefig(join(local_output, 'class_distribution.png'))
+    print(f"Final class distribution: {class_distributions}")
 
-                if transpose_backward is not None:
-                    seg = seg.transpose(transpose_backward)
+    # Copy files to final destination
+    print(f"Copying results from {local_output} to {output_folder}")
+    for file_name in os.listdir(local_output):
+        src_file = join(local_output, file_name)
+        dst_file = join(output_folder, file_name)
+        shutil.copy2(src_file, dst_file)
 
-                # Save segmentation
-                nib_img = nib.Nifti1Image(seg.astype(np.uint8), np.eye(4))
-                nib.save(nib_img, output_file)
+    # Report timing
+    end_time = time.time()
+    total_time = end_time - start_time
+    print(f"Inference completed in {total_time:.2f} seconds")
+    print(f"Average time per case: {total_time/len(test_files):.2f} seconds")
+    print(f"Results saved to {output_folder}")
 
-                # Get classification result
-                if hasattr(cls_output, 'shape'):
-                    class_probs = torch.softmax(cls_output, dim=1).cpu().numpy()[0]
-                    predicted_class = int(np.argmax(class_probs))
-                else:
-                    class_probs = np.zeros(3)
-                    predicted_class = 0
-
-                print(f"Predicted class: {predicted_class}, probabilities: {class_probs}")
-                return predicted_class, class_probs
-
-            except Exception as e:
-                print(f"ERROR processing {image_file}: {e}")
-                import traceback
-                traceback.print_exc()
-
-                # Create empty segmentation on error
-                empty_seg = np.zeros(expected_patch_size, dtype=np.uint8)
-                nib_img = nib.Nifti1Image(empty_seg, np.eye(4))
-                nib.save(nib_img, output_file)
-                return 0, np.zeros(3)
-
-        # Find all test images
-        test_images = glob.glob(join(input_folder, "*_0000.nii.gz"))
-        if len(test_images) == 0:
-            test_images = glob.glob(join(input_folder, "*.nii.gz"))
-
-        if len(test_images) == 0:
-            print(f"Error: No test images found in '{input_folder}'")
-            return False
-
-        print(f"Found {len(test_images)} test images")
-
-        # Process all test cases
-        classification_results = []
-        for img_file in test_images:
-            case_id = os.path.basename(img_file).replace("_0000.nii.gz", "")
-
-            if not case_id.endswith(".nii.gz"):
-                output_file = join(output_folder, f"{case_id}.nii.gz")
-                result_name = f"{case_id}.nii.gz"
-            else:
-                output_file = join(output_folder, case_id)
-                result_name = case_id
-                case_id = case_id.replace(".nii.gz", "")
-
-            predicted_class, class_probs = predict_case(img_file, output_file)
-            classification_results.append([result_name, predicted_class])
-            print(f"Processed {case_id}: Class {predicted_class}")
-
-        # Save classification results to CSV
-        csv_file = join(output_folder, "subtype_results.csv")
-        with open(csv_file, "w") as f:
-            f.write("Names,Subtype\n")
-            for name, subtype in classification_results:
-                f.write(f"{name},{subtype}\n")
-
-        print(f"Saved classification results to {csv_file}")
-        print("Inference completed successfully")
-        return True
-
-    except Exception as e:
-        print(f"Unhandled error during inference: {e}")
-        import traceback
-        traceback.print_exc()
-        return False
-
-
+    return True
 
 def main():
     parser = argparse.ArgumentParser(description="Run the complete pipeline for pancreatic cancer segmentation and classification")
@@ -820,9 +781,12 @@ def main():
             os.makedirs(test_output, exist_ok=True)
 
             # Run inference (use only fold 0 which has our custom train/validation split)
-            inference_success = perform_inference_direct(
-                args.task_id, test_input, test_output,
-                args.configuration, "MultitasknnUNetTrainer", args.plans, folds=[0]
+
+            inference_success = run_optimized_inference(
+                  task_id=900,
+                  test_folder="/content/gdrive/MyDrive/PancreasCancerFinal/dataset/test",
+                  output_folder="/content/gdrive/MyDrive/PancreasCancerFinal/output/inference_results",
+                  fold=0
             )
 
             if inference_success:
