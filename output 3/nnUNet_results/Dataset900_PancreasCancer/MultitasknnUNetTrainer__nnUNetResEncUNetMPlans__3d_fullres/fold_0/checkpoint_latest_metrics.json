@@ -1,0 +1,12 @@
+{
+    "best_dice": 0.8801577100591793,
+    "best_f1": 0.8165021293070073,
+    "best_metric": 0.8405254559779611,
+    "class_counts": [
+        62.0,
+        106.0,
+        84.0
+    ],
+    "epochs_without_improvement": 202,
+    "training_phase": 2
+}

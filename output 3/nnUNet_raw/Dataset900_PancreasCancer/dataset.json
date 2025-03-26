@@ -1,0 +1,1254 @@
+{
+    "name": "PancreasCancer",
+    "description": "Pancreatic cancer segmentation and classification",
+    "tensorImageSize": "4D",
+    "reference": "",
+    "licence": "",
+    "release": "0.0",
+    "channel_names": {
+        "0": "CT"
+    },
+    "labels": {
+        "background": 0,
+        "whole_pancreas": [
+            1,
+            2
+        ],
+        "pancreas_lesion": 2
+    },
+    "regions_class_order": [
+        1,
+        2
+    ],
+    "numTraining": 288,
+    "numTest": 72,
+    "training": [
+        {
+            "image": "./imagesTr/quiz_0_327_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_327.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_224_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_224.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_285_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_285.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_302_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_302.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_370_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_370.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_219_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_219.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_117_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_117.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_066_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_066.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_386_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_386.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_329_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_329.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_292_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_292.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_430_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_430.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_400_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_400.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_446_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_446.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_449_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_449.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_374_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_374.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_306_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_306.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_060_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_060.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_159_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_159.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_163_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_163.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_457_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_457.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_310_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_310.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_126_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_126.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_360_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_360.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_077_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_077.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_441_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_441.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_145_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_145.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_318_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_318.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_401_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_401.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_150_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_150.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_070_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_070.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_392_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_392.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_443_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_443.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_160_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_160.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_041_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_041.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_199_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_199.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_324_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_324.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_222_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_222.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_288_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_288.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_399_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_399.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_139_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_139.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_313_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_313.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_235_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_235.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_390_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_390.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_459_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_459.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_458_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_458.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_448_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_448.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_220_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_220.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_323_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_323.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_298_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_298.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_542_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_542.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_533_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_533.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_540_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_540.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_509_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_509.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_539_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_539.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_511_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_511.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_523_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_523.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_475_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_475.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_498_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_498.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_526_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_526.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_544_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_544.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_502_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_502.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_007_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_007.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_018_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_018.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_025_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_025.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_016_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_016.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_010_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_010.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_027_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_027.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_034_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_034.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_036_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_036.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_029_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_029.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_031_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_031.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_030_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_030.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_059_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_059.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_506_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_506.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_534_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_534.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_276_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_276.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_279_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_279.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_384_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_384.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_294_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_294.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_517_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_517.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_516_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_516.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_286_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_286.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_274_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_274.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_505_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_505.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_510_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_510.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_293_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_293.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_532_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_532.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_297_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_297.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_529_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_529.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_522_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_522.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_515_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_515.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_102_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_102.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_179_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_179.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_337_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_337.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_247_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_247.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_128_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_128.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_346_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_346.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_439_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_439.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_344_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_344.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_196_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_196.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_087_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_087.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_079_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_079.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_536_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_536.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_115_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_115.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_086_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_086.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_537_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_537.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_193_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_193.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_131_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_131.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_181_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_181.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_342_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_342.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_304_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_304.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_121_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_121.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_470_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_470.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_435_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_435.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_303_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_303.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_300_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_300.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_339_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_339.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_431_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_431.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_340_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_340.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_482_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_482.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_345_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_345.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_456_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_456.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_120_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_120.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_316_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_316.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_251_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_251.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_463_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_463.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_133_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_133.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_440_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_440.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_006_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_006.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_173_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_173.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_207_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_207.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_182_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_182.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_185_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_185.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_469_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_469.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_177_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_177.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_541_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_541.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_142_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_142.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_176_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_176.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_466_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_466.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_465_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_465.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_122_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_122.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_489_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_489.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_072_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_072.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_255_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_255.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_119_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_119.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_180_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_180.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_450_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_450.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_147_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_147.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_455_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_455.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_461_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_461.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_096_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_096.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_123_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_123.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_205_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_205.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_210_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_210.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_490_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_490.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_124_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_124.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_248_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_248.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_204_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_204.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_003_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_003.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_190_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_190.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_116_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_116.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_473_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_473.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_343_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_343.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_322_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_322.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_188_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_188.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_252_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_252.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_075_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_075.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_051_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_051.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_055_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_055.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_054_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_054.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_040_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_040.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_044_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_044.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_028_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_028.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_488_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_488.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_200_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_200.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_287_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_287.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_243_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_243.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_442_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_442.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_501_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_501.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_004_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_004.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_264_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_264.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_451_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_451.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_389_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_389.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_002_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_002.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_492_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_492.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_214_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_214.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_495_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_495.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_395_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_395.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_026_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_026.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_268_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_268.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_535_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_535.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_406_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_406.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_486_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_486.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_362_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_362.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_527_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_527.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_444_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_444.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_217_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_217.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_493_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_493.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_223_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_223.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_202_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_202.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_284_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_284.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_508_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_508.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_109_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_109.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_387_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_387.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_272_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_272.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_258_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_258.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_259_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_259.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_332_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_332.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_437_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_437.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_245_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_245.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_208_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_208.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_338_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_338.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_071_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_071.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_005_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_005.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_341_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_341.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_307_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_307.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_314_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_314.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_015_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_015.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_265_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_265.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_382_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_382.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_291_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_291.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_277_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_277.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_198_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_198.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_218_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_218.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_480_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_480.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_023_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_023.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_260_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_260.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_296_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_296.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_246_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_246.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_118_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_118.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_452_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_452.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_413_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_413.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_487_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_487.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_479_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_479.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_134_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_134.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_460_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_460.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_058_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_058.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_112_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_112.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_178_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_178.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_433_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_433.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_099_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_099.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_476_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_476.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_411_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_411.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_321_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_321.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_410_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_410.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_309_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_309.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_416_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_416.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_481_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_481.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_355_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_355.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_497_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_497.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_111_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_111.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_254_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_254.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_187_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_187.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_244_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_244.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_184_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_184.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_171_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_171.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_253_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_253.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_168_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_168.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_189_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_189.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_0_174_0000.nii.gz",
+            "label": "./labelsTr/quiz_0_174.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_090_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_090.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_211_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_211.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_213_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_213.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_164_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_164.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_158_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_158.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_221_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_221.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_166_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_166.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_331_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_331.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_335_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_335.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_231_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_231.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_093_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_093.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_242_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_242.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_154_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_154.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_227_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_227.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_1_094_0000.nii.gz",
+            "label": "./labelsTr/quiz_1_094.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_364_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_364.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_191_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_191.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_085_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_085.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_377_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_377.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_084_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_084.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_241_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_241.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_098_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_098.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_074_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_074.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_089_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_089.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_379_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_379.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_080_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_080.nii.gz"
+        },
+        {
+            "image": "./imagesTr/quiz_2_088_0000.nii.gz",
+            "label": "./labelsTr/quiz_2_088.nii.gz"
+        }
+    ],
+    "test": [
+        "./imagesTs/quiz_275_0000.nii.gz",
+        "./imagesTs/quiz_353_0000.nii.gz",
+        "./imagesTs/quiz_388_0000.nii.gz",
+        "./imagesTs/quiz_391_0000.nii.gz",
+        "./imagesTs/quiz_161_0000.nii.gz",
+        "./imagesTs/quiz_409_0000.nii.gz",
+        "./imagesTs/quiz_524_0000.nii.gz",
+        "./imagesTs/quiz_152_0000.nii.gz",
+        "./imagesTs/quiz_267_0000.nii.gz",
+        "./imagesTs/quiz_361_0000.nii.gz",
+        "./imagesTs/quiz_512_0000.nii.gz",
+        "./imagesTs/quiz_270_0000.nii.gz",
+        "./imagesTs/quiz_053_0000.nii.gz",
+        "./imagesTs/quiz_144_0000.nii.gz",
+        "./imagesTs/quiz_141_0000.nii.gz",
+        "./imagesTs/quiz_417_0000.nii.gz",
+        "./imagesTs/quiz_263_0000.nii.gz",
+        "./imagesTs/quiz_357_0000.nii.gz",
+        "./imagesTs/quiz_280_0000.nii.gz",
+        "./imagesTs/quiz_504_0000.nii.gz",
+        "./imagesTs/quiz_373_0000.nii.gz",
+        "./imagesTs/quiz_347_0000.nii.gz",
+        "./imagesTs/quiz_238_0000.nii.gz",
+        "./imagesTs/quiz_349_0000.nii.gz",
+        "./imagesTs/quiz_056_0000.nii.gz",
+        "./imagesTs/quiz_092_0000.nii.gz",
+        "./imagesTs/quiz_097_0000.nii.gz",
+        "./imagesTs/quiz_429_0000.nii.gz",
+        "./imagesTs/quiz_424_0000.nii.gz",
+        "./imagesTs/quiz_226_0000.nii.gz",
+        "./imagesTs/quiz_408_0000.nii.gz",
+        "./imagesTs/quiz_228_0000.nii.gz",
+        "./imagesTs/quiz_369_0000.nii.gz",
+        "./imagesTs/quiz_229_0000.nii.gz",
+        "./imagesTs/quiz_402_0000.nii.gz",
+        "./imagesTs/quiz_048_0000.nii.gz",
+        "./imagesTs/quiz_269_0000.nii.gz",
+        "./imagesTs/quiz_266_0000.nii.gz",
+        "./imagesTs/quiz_257_0000.nii.gz",
+        "./imagesTs/quiz_499_0000.nii.gz",
+        "./imagesTs/quiz_157_0000.nii.gz",
+        "./imagesTs/quiz_233_0000.nii.gz",
+        "./imagesTs/quiz_367_0000.nii.gz",
+        "./imagesTs/quiz_422_0000.nii.gz",
+        "./imagesTs/quiz_068_0000.nii.gz",
+        "./imagesTs/quiz_405_0000.nii.gz",
+        "./imagesTs/quiz_428_0000.nii.gz",
+        "./imagesTs/quiz_376_0000.nii.gz",
+        "./imagesTs/quiz_101_0000.nii.gz",
+        "./imagesTs/quiz_425_0000.nii.gz",
+        "./imagesTs/quiz_047_0000.nii.gz",
+        "./imagesTs/quiz_045_0000.nii.gz",
+        "./imagesTs/quiz_037_0000.nii.gz",
+        "./imagesTs/quiz_371_0000.nii.gz",
+        "./imagesTs/quiz_135_0000.nii.gz",
+        "./imagesTs/quiz_130_0000.nii.gz",
+        "./imagesTs/quiz_095_0000.nii.gz",
+        "./imagesTs/quiz_261_0000.nii.gz",
+        "./imagesTs/quiz_146_0000.nii.gz",
+        "./imagesTs/quiz_521_0000.nii.gz",
+        "./imagesTs/quiz_282_0000.nii.gz",
+        "./imagesTs/quiz_162_0000.nii.gz",
+        "./imagesTs/quiz_108_0000.nii.gz",
+        "./imagesTs/quiz_069_0000.nii.gz",
+        "./imagesTs/quiz_137_0000.nii.gz",
+        "./imagesTs/quiz_271_0000.nii.gz",
+        "./imagesTs/quiz_129_0000.nii.gz",
+        "./imagesTs/quiz_155_0000.nii.gz",
+        "./imagesTs/quiz_351_0000.nii.gz",
+        "./imagesTs/quiz_378_0000.nii.gz",
+        "./imagesTs/quiz_052_0000.nii.gz",
+        "./imagesTs/quiz_520_0000.nii.gz"
+    ],
+    "file_ending": ".nii.gz"
+}

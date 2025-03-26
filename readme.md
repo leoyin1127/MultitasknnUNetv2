@@ -113,12 +113,12 @@ python evaluation.py --pred_path /path/to/predictions --gt_path /path/to/ground_
 
 Our method achieves the following performance:
 
-| Metric              | Value | Target |
-| ------------------- | ----- | ------ |
-| Whole pancreas DSC  | 0.92  | ≥0.91  |
-| Pancreas lesion DSC | 0.81  | ≥0.31  |
-| Classification F1   | 0.78  | ≥0.70  |
-| Inference speedup   | 12%   | ≥10%   |
+| Metric              | Value                 | Target |
+| ------------------- | --------------------- | ------ |
+| Whole pancreas DSC  | 0.9128                | ≥0.91  |
+| Pancreas lesion DSC | 0.8163                | ≥0.31  |
+| Classification F1   | 0.8165                | ≥0.70  |
+| Inference speedup   | no direct measurement | ≥10%   |
 
 The model exhibits some fluctuation in classification F1 score during training due to the multitask learning approach, with competing objectives between segmentation and classification tasks.
 

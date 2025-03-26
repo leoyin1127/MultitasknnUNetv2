@@ -1,0 +1,211 @@
+Environment set up successfully:
+  Dataset directory: /content/gdrive/MyDrive/PancreasCancerFinal/dataset
+  Output directory: /content/gdrive/MyDrive/PancreasCancerFinal/output
+  nnUNet_raw: /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_raw
+  nnUNet_preprocessed: /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed
+  nnUNet_results: /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_results
+
+=== Creating custom split file using original validation set ===
+Original validation cases: 36
+Original training cases: 252
+Found 288 available preprocessed cases
+Preprocessed validation cases: 36
+Preprocessed training cases: 252
+Saving custom split to /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed/Dataset900_PancreasCancer/splits_final.json
+Training cases: 252
+Validation cases: 36
+Verified: Created split file contains 1 split(s)
+Starting fixed whole-image inference for A100 GPU...
+Using device: cuda
+Loading configuration files...
+Initializing trainer...
+Using device: cuda:0
+
+#######################################################################
+Please cite the following paper when using nnU-Net:
+Isensee, F., Jaeger, P. F., Kohl, S. A., Petersen, J., & Maier-Hein, K. H. (2021). nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation. Nature methods, 18(2), 203-211.
+#######################################################################
+
+2025-03-22 09:59:58.302055: ==================================================
+2025-03-22 09:59:58.306374: MultitasknnUNetTrainer for pancreatic cancer
+2025-03-22 09:59:58.308725: ==================================================
+2025-03-22 09:59:58.311721: Expected performance:
+2025-03-22 09:59:58.315076: - Whole pancreas DSC: ~0.91+
+2025-03-22 09:59:58.317277: - Pancreas lesion DSC: ≥0.31
+2025-03-22 09:59:58.319575: - Classification macro F1: ≥0.7
+2025-03-22 09:59:58.321786: ==================================================
+Initializing network...
+2025-03-22 10:00:02.052828: Using torch.compile...
+2025-03-22 10:00:03.111633: Initializing MultitasknnUNetTrainer...
+2025-03-22 10:00:03.115847: Preprocessed dataset base: /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed/Dataset900_PancreasCancer
+2025-03-22 10:00:03.118086: Using preprocessed folder: /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed/Dataset900_PancreasCancer/nnUNetPlans_3d_fullres
+2025-03-22 10:00:03.121511: Loading validation keys from /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed/Dataset900_PancreasCancer/splits_final.json
+2025-03-22 10:00:03.126654: Loaded 36 validation keys from splits file
+2025-03-22 10:00:03.129221: Validation keys examples: ['quiz_0_254', 'quiz_0_187', 'quiz_0_244', 'quiz_0_184', 'quiz_0_171']
+2025-03-22 10:00:03.131359: Extracting subtypes from case naming patterns
+2025-03-22 10:00:03.134566: Created 36 case-to-subtype mappings
+2025-03-22 10:00:03.151788: Mapping examples: [('quiz_0_254', 0), ('quiz_0_187', 0), ('quiz_0_244', 0), ('quiz_0_184', 0), ('quiz_0_171', 0)]
+2025-03-22 10:00:03.155244: Class distribution: Subtype 0: 9, Subtype 1: 15, Subtype 2: 12
+[MultitaskUNet] Detected bottleneck dimension: 320
+[MultitaskUNet] Initialized with improved gradient isolation
+[MultitaskUNet] Classification head input dimensions: 320
+[MultitaskUNet] Set training phase to 1
+2025-03-22 10:00:03.178246: Multitask initialization complete.
+Loading checkpoint: /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_results/Dataset900_PancreasCancer/MultitasknnUNetTrainer__nnUNetResEncUNetMPlans__3d_fullres/fold_0/checkpoint_best.pth
+Checkpoint loaded successfully
+Enabled fast inference mode
+Network requires input dimensions divisible by: [64, 64, 64]
+Found 72 test files
+Processing test files:   0% 0/72 [00:00<?, ?it/s]Case quiz_428: Original shape (110, 118, 174), padded to [128, 128, 192]
+Case quiz_428: Classification probabilities = [1.64329472e-09 9.99999881e-01 1.13861695e-07], predicted class = 1, confidence = 1.0000
+Processing test files:   1% 1/72 [00:07<08:25, 7.06s/it]Case quiz_261: Original shape (60, 152, 117), padded to [64, 192, 128]
+Case quiz_261: Classification probabilities = [3.1608816e-10 1.0000000e+00 3.6677815e-08], predicted class = 1, confidence = 1.0000
+Processing test files:   3% 2/72 [00:14<07:40, 6.58s/it]Case quiz_373: Original shape (95, 96, 203), padded to [128, 128, 256]
+Case quiz_373: Classification probabilities = [7.7019674e-10 9.9999988e-01 6.0235735e-08], predicted class = 1, confidence = 1.0000
+Processing test files:   4% 3/72 [00:21<06:59, 6.07s/it]Case quiz_512: Original shape (44, 79, 143), padded to [64, 128, 192]
+Case quiz_512: Classification probabilities = [2.6410152e-10 1.0000000e+00 2.3222947e-08], predicted class = 1, confidence = 1.0000
+Processing test files:   6% 4/72 [00:26<06:17, 5.51s/it]Case quiz_429: Original shape (38, 96, 178), padded to [64, 128, 192]
+Case quiz_429: Classification probabilities = [9.8300930e-03 1.2218159e-04 9.9004769e-01], predicted class = 2, confidence = 0.9900
+Processing test files:   7% 5/72 [00:30<05:42, 5.07s/it]Case quiz_130: Original shape (46, 104, 151), padded to [64, 128, 192]
+Case quiz_130: Classification probabilities = [1.8293778e-10 1.0000000e+00 1.6990271e-08], predicted class = 1, confidence = 1.0000
+Processing test files:   8% 6/72 [00:35<05:14, 4.71s/it]Case quiz_266: Original shape (45, 95, 155), padded to [64, 128, 192]
+Case quiz_266: Classification probabilities = [3.3751690e-05 3.4714625e-03 9.9649483e-01], predicted class = 2, confidence = 0.9965
+Processing test files:  10% 7/72 [00:39<04:48, 4.43s/it]Case quiz_101: Original shape (111, 95, 161), padded to [128, 128, 192]
+Case quiz_101: Classification probabilities = [2.4322911e-12 1.0000000e+00 4.0904846e-10], predicted class = 1, confidence = 1.0000
+Processing test files:  11% 8/72 [00:43<04:28, 4.19s/it]Case quiz_048: Original shape (51, 100, 208), padded to [64, 128, 256]
+Case quiz_048: Classification probabilities = [1.1072434e-11 1.0000000e+00 1.5197993e-09], predicted class = 1, confidence = 1.0000
+Processing test files:  12% 9/72 [00:47<04:10, 4.00s/it]Case quiz_504: Original shape (111, 98, 149), padded to [128, 128, 192]
+Case quiz_504: Classification probabilities = [1.4523873e-12 1.0000000e+00 2.3306879e-10], predicted class = 1, confidence = 1.0000
+Processing test files:  14% 10/72 [00:51<03:54, 3.82s/it]Case quiz_146: Original shape (160, 116, 123), padded to [192, 128, 128]
+Case quiz_146: Classification probabilities = [1.34930085e-08 9.99999523e-01 4.14864871e-07], predicted class = 1, confidence = 1.0000
+Processing test files:  15% 11/72 [00:54<03:40, 3.67s/it]Case quiz_271: Original shape (50, 136, 171), padded to [64, 192, 192]
+Case quiz_271: Classification probabilities = [1.33840147e-10 1.00000000e+00 1.30268925e-08], predicted class = 1, confidence = 1.0000
+Processing test files:  17% 12/72 [00:58<03:27, 3.53s/it]Case quiz_233: Original shape (43, 95, 163), padded to [64, 128, 192]
+Case quiz_233: Classification probabilities = [2.0536883e-07 9.9997914e-01 2.0623416e-05], predicted class = 1, confidence = 1.0000
+Processing test files:  18% 13/72 [01:01<03:16, 3.41s/it]Case quiz_351: Original shape (43, 144, 172), padded to [64, 192, 192]
+Case quiz_351: Classification probabilities = [8.5947029e-08 9.9999654e-01 3.3931447e-06], predicted class = 1, confidence = 1.0000
+Processing test files:  19% 14/72 [01:04<03:06, 3.30s/it]Case quiz_108: Original shape (43, 201, 355), padded to [64, 256, 384]
+Case quiz_108: Classification probabilities = [2.3355924e-09 9.9999976e-01 1.8626527e-07], predicted class = 1, confidence = 1.0000
+Processing test files:  21% 15/72 [01:08<02:57, 3.19s/it]Case quiz_280: Original shape (100, 140, 216), padded to [128, 192, 256]
+Case quiz_280: Classification probabilities = [8.2022752e-06 9.9983847e-01 1.5326156e-04], predicted class = 1, confidence = 0.9998
+Processing test files:  22% 16/72 [01:11<02:48, 3.10s/it]Case quiz_097: Original shape (50, 121, 190), padded to [64, 128, 192]
+Case quiz_097: Classification probabilities = [8.7284105e-05 9.9936110e-01 5.5165251e-04], predicted class = 1, confidence = 0.9994
+Processing test files:  24% 17/72 [01:14<02:40, 3.02s/it]Case quiz_520: Original shape (49, 131, 208), padded to [64, 192, 256]
+Case quiz_520: Classification probabilities = [1.2513931e-05 9.9455005e-01 5.4374277e-03], predicted class = 1, confidence = 0.9946
+Processing test files:  25% 18/72 [01:17<02:33, 2.94s/it]Case quiz_369: Original shape (89, 128, 161), padded to [128, 128, 192]
+Case quiz_369: Classification probabilities = [0.01422428 0.95712596 0.02864979], predicted class = 1, confidence = 0.9571
+Processing test files:  26% 19/72 [01:20<02:26, 2.87s/it]Case quiz_162: Original shape (64, 180, 236), padded to [64, 192, 256]
+Case quiz_162: Classification probabilities = [6.0092592e-05 9.9912637e-01 8.1350759e-04], predicted class = 1, confidence = 0.9991
+Processing test files:  28% 20/72 [01:22<02:19, 2.81s/it]Case quiz_267: Original shape (116, 143, 207), padded to [128, 192, 256]
+Case quiz_267: Classification probabilities = [1.18362087e-09 9.99999881e-01 1.04894305e-07], predicted class = 1, confidence = 1.0000
+Processing test files:  29% 21/72 [01:25<02:13, 2.75s/it]Case quiz_388: Original shape (64, 140, 221), padded to [64, 192, 256]
+Case quiz_388: Classification probabilities = [3.2222619e-12 1.0000000e+00 5.2114124e-10], predicted class = 1, confidence = 1.0000
+Processing test files:  31% 22/72 [01:28<02:07, 2.69s/it]Case quiz_092: Original shape (134, 179, 220), padded to [192, 192, 256]
+Case quiz_092: Classification probabilities = [9.51510265e-06 9.99869704e-01 1.20770965e-04], predicted class = 1, confidence = 0.9999
+Processing test files:  32% 23/72 [01:30<02:02, 2.64s/it]Case quiz_226: Original shape (134, 157, 204), padded to [192, 192, 256]
+Case quiz_226: Classification probabilities = [3.894953e-05 9.991002e-01 8.608925e-04], predicted class = 1, confidence = 0.9991
+Processing test files:  33% 24/72 [01:33<01:56, 2.58s/it]Case quiz_347: Original shape (81, 136, 211), padded to [128, 192, 256]
+Case quiz_347: Classification probabilities = [6.8358853e-11 1.0000000e+00 5.6467395e-09], predicted class = 1, confidence = 1.0000
+Processing test files:  35% 25/72 [01:35<01:51, 2.53s/it]Case quiz_161: Original shape (121, 129, 216), padded to [128, 192, 256]
+Case quiz_161: Classification probabilities = [1.5381509e-07 9.9998534e-01 1.4567269e-05], predicted class = 1, confidence = 1.0000
+Processing test files:  36% 26/72 [01:38<01:47, 2.49s/it]Case quiz_376: Original shape (43, 157, 216), padded to [64, 192, 256]
+Case quiz_376: Classification probabilities = [2.8814513e-06 3.3018540e-03 9.9669528e-01], predicted class = 2, confidence = 0.9967
+Processing test files:  38% 27/72 [01:40<01:42, 2.44s/it]Case quiz_424: Original shape (118, 105, 211), padded to [128, 128, 256]
+Case quiz_424: Classification probabilities = [0.78116506 0.1597919  0.05904306], predicted class = 0, confidence = 0.7812
+Processing test files:  39% 28/72 [01:43<01:38, 2.40s/it]Case quiz_405: Original shape (94, 181, 194), padded to [128, 192, 256]
+Case quiz_405: Classification probabilities = [1.5777937e-06 1.0658237e-04 9.9989188e-01], predicted class = 2, confidence = 0.9999
+Processing test files:  40% 29/72 [01:45<01:34, 2.36s/it]Case quiz_357: Original shape (35, 157, 177), padded to [64, 192, 192]
+Case quiz_357: Classification probabilities = [2.6561389e-11 1.0000000e+00 6.8646897e-09], predicted class = 1, confidence = 1.0000
+Processing test files:  42% 30/72 [01:48<01:30, 2.32s/it]Case quiz_052: Original shape (96, 107, 156), padded to [128, 128, 192]
+Case quiz_052: Classification probabilities = [3.3718219e-09 9.9999988e-01 1.6827669e-07], predicted class = 1, confidence = 1.0000
+Processing test files:  43% 31/72 [01:50<01:26, 2.28s/it]Case quiz_037: Original shape (71, 135, 207), padded to [128, 192, 256]
+Case quiz_037: Classification probabilities = [1.7704190e-07 9.9999559e-01 4.2559527e-06], predicted class = 1, confidence = 1.0000
+Processing test files:  44% 32/72 [01:52<01:22, 2.25s/it]Case quiz_422: Original shape (143, 126, 173), padded to [192, 128, 192]
+Case quiz_422: Classification probabilities = [4.6714799e-10 1.0000000e+00 2.1144732e-08], predicted class = 1, confidence = 1.0000
+Processing test files:  46% 33/72 [01:54<01:19, 2.22s/it]Case quiz_229: Original shape (47, 102, 145), padded to [64, 128, 192]
+Case quiz_229: Classification probabilities = [2.7363281e-08 9.9999869e-01 1.2385567e-06], predicted class = 1, confidence = 1.0000
+Processing test files:  47% 34/72 [01:57<01:16, 2.19s/it]Case quiz_129: Original shape (47, 216, 275), padded to [64, 256, 320]
+Case quiz_129: Classification probabilities = [1.0892314e-05 9.9638152e-01 3.6075776e-03], predicted class = 1, confidence = 0.9964
+Processing test files:  49% 35/72 [01:59<01:13, 2.16s/it]Case quiz_409: Original shape (48, 136, 223), padded to [64, 192, 256]
+Case quiz_409: Classification probabilities = [5.0979446e-07 4.7923234e-09 9.9999952e-01], predicted class = 2, confidence = 1.0000
+Processing test files:  50% 36/72 [02:01<01:10, 2.13s/it]Case quiz_135: Original shape (60, 96, 188), padded to [64, 128, 192]
+Case quiz_135: Classification probabilities = [2.2320986e-05 8.5919755e-10 9.9997771e-01], predicted class = 2, confidence = 1.0000
+Processing test files:  51% 37/72 [02:03<01:07, 2.11s/it]Case quiz_425: Original shape (53, 106, 188), padded to [64, 128, 192]
+Case quiz_425: Classification probabilities = [6.9854405e-06 9.9941146e-01 5.8155356e-04], predicted class = 1, confidence = 0.9994
+Processing test files:  53% 38/72 [02:05<01:04, 2.08s/it]Case quiz_152: Original shape (71, 112, 183), padded to [128, 128, 192]
+Case quiz_152: Classification probabilities = [3.9789626e-12 1.0000000e+00 1.0283476e-09], predicted class = 1, confidence = 1.0000
+Processing test files:  54% 39/72 [02:07<01:01, 2.06s/it]Case quiz_270: Original shape (86, 121, 173), padded to [128, 128, 192]
+Case quiz_270: Classification probabilities = [1.2204640e-13 1.0000000e+00 2.9400777e-11], predicted class = 1, confidence = 1.0000
+Processing test files:  56% 40/72 [02:09<00:59, 2.03s/it]Case quiz_047: Original shape (120, 141, 205), padded to [128, 192, 256]
+Case quiz_047: Classification probabilities = [5.7685079e-10 1.0000000e+00 4.5468322e-08], predicted class = 1, confidence = 1.0000
+Processing test files:  57% 41/72 [02:11<00:56, 2.01s/it]Case quiz_402: Original shape (40, 98, 197), padded to [64, 128, 256]
+Case quiz_402: Classification probabilities = [0.00118838 0.8538385  0.14497316], predicted class = 1, confidence = 0.8538
+Processing test files:  58% 42/72 [02:13<00:54, 1.99s/it]Case quiz_257: Original shape (61, 131, 195), padded to [64, 192, 256]
+Case quiz_257: Classification probabilities = [9.8480269e-12 1.0000000e+00 1.4389171e-09], predicted class = 1, confidence = 1.0000
+Processing test files:  60% 43/72 [02:15<00:51, 1.97s/it]Case quiz_069: Original shape (231, 126, 176), padded to [256, 128, 192]
+Case quiz_069: Classification probabilities = [6.7440686e-10 1.0000000e+00 3.5410764e-08], predicted class = 1, confidence = 1.0000
+Processing test files:  61% 44/72 [02:17<00:49, 1.94s/it]Case quiz_391: Original shape (139, 172, 233), padded to [192, 192, 256]
+Case quiz_391: Classification probabilities = [8.0425082e-08 9.9999774e-01 2.1822402e-06], predicted class = 1, confidence = 1.0000
+Processing test files:  62% 45/72 [02:19<00:46, 1.92s/it]Case quiz_155: Original shape (67, 153, 193), padded to [128, 192, 256]
+Case quiz_155: Classification probabilities = [6.9832968e-12 1.0000000e+00 1.2698399e-09], predicted class = 1, confidence = 1.0000
+Processing test files:  64% 46/72 [02:21<00:44, 1.90s/it]Case quiz_371: Original shape (38, 120, 236), padded to [64, 128, 256]
+Case quiz_371: Classification probabilities = [1.2192515e-06 9.9991417e-01 8.4645464e-05], predicted class = 1, confidence = 0.9999
+Processing test files:  65% 47/72 [02:23<00:42, 1.88s/it]Case quiz_263: Original shape (45, 108, 240), padded to [64, 128, 256]
+Case quiz_263: Classification probabilities = [8.6102396e-09 9.9999881e-01 1.1499611e-06], predicted class = 1, confidence = 1.0000
+Processing test files:  67% 48/72 [02:25<00:39, 1.86s/it]Case quiz_157: Original shape (89, 83, 114), padded to [128, 128, 128]
+Case quiz_157: Classification probabilities = [7.0239184e-04 4.6286318e-02 9.5301127e-01], predicted class = 2, confidence = 0.9530
+Processing test files:  68% 49/72 [02:27<00:37, 1.84s/it]Case quiz_045: Original shape (91, 105, 139), padded to [128, 128, 192]
+Case quiz_045: Classification probabilities = [3.7592940e-13 1.0000000e+00 8.3755024e-11], predicted class = 1, confidence = 1.0000
+Processing test files:  69% 50/72 [02:29<00:35, 1.82s/it]Case quiz_269: Original shape (49, 113, 169), padded to [64, 128, 192]
+Case quiz_269: Classification probabilities = [8.999650e-01 4.298677e-05 9.999201e-02], predicted class = 0, confidence = 0.9000
+Processing test files:  71% 51/72 [02:30<00:33, 1.80s/it]Case quiz_524: Original shape (61, 157, 244), padded to [64, 192, 256]
+Case quiz_524: Classification probabilities = [3.9577631e-07 9.9977094e-01 2.2871324e-04], predicted class = 1, confidence = 0.9998
+Processing test files:  72% 52/72 [02:32<00:31, 1.78s/it]Case quiz_275: Original shape (115, 90, 204), padded to [128, 128, 256]
+Case quiz_275: Classification probabilities = [1.6216469e-06 9.9996293e-01 3.5494566e-05], predicted class = 1, confidence = 1.0000
+Processing test files:  74% 53/72 [02:34<00:29, 1.76s/it]Case quiz_367: Original shape (47, 127, 192), padded to [64, 128, 192]
+Case quiz_367: Classification probabilities = [4.0270355e-05 9.9924600e-01 7.1380910e-04], predicted class = 1, confidence = 0.9992
+Processing test files:  75% 54/72 [02:36<00:27, 1.75s/it]Case quiz_349: Original shape (105, 109, 205), padded to [128, 128, 256]
+Case quiz_349: Classification probabilities = [1.4752796e-07 1.2281860e-10 9.9999988e-01], predicted class = 2, confidence = 1.0000
+Processing test files:  76% 55/72 [02:38<00:25, 1.73s/it]Case quiz_137: Original shape (65, 293, 353), padded to [128, 320, 384]
+Case quiz_137: Classification probabilities = [2.4432575e-08 9.9999523e-01 4.7109088e-06], predicted class = 1, confidence = 1.0000
+Processing test files:  78% 56/72 [02:39<00:23, 1.71s/it]Case quiz_417: Original shape (104, 88, 121), padded to [128, 128, 128]
+Case quiz_417: Classification probabilities = [6.308883e-12 1.000000e+00 8.592167e-10], predicted class = 1, confidence = 1.0000
+Processing test files:  79% 57/72 [02:41<00:21, 1.70s/it]Case quiz_353: Original shape (92, 129, 175), padded to [128, 192, 192]
+Case quiz_353: Classification probabilities = [4.4241816e-08 9.9999833e-01 1.6153818e-06], predicted class = 1, confidence = 1.0000
+Processing test files:  81% 58/72 [02:43<00:20, 1.68s/it]Case quiz_141: Original shape (83, 115, 217), padded to [128, 128, 256]
+Case quiz_141: Classification probabilities = [1.077699e-09 9.999999e-01 7.584824e-08], predicted class = 1, confidence = 1.0000
+Processing test files:  82% 59/72 [02:44<00:18, 1.67s/it]Case quiz_056: Original shape (98, 164, 151), padded to [128, 192, 192]
+Case quiz_056: Classification probabilities = [3.2106581e-10 1.0000000e+00 2.0816913e-08], predicted class = 1, confidence = 1.0000
+Processing test files:  83% 60/72 [02:46<00:16, 1.65s/it]Case quiz_144: Original shape (49, 142, 171), padded to [64, 192, 192]
+Case quiz_144: Classification probabilities = [5.6112367e-12 1.0000000e+00 8.4589574e-10], predicted class = 1, confidence = 1.0000
+Processing test files:  85% 61/72 [02:48<00:14, 1.64s/it]Case quiz_228: Original shape (74, 140, 185), padded to [128, 192, 192]
+Case quiz_228: Classification probabilities = [4.951899e-12 1.000000e+00 7.582560e-10], predicted class = 1, confidence = 1.0000
+Processing test files:  86% 62/72 [02:49<00:13, 1.62s/it]Case quiz_499: Original shape (103, 100, 132), padded to [128, 128, 192]
+Case quiz_499: Classification probabilities = [1.8503894e-12 1.0000000e+00 3.2358397e-10], predicted class = 1, confidence = 1.0000
+Processing test files:  88% 63/72 [02:51<00:11, 1.61s/it]Case quiz_053: Original shape (57, 133, 160), padded to [64, 192, 192]
+Case quiz_053: Classification probabilities = [3.6513010e-12 1.0000000e+00 5.8137506e-10], predicted class = 1, confidence = 1.0000
+Processing test files:  89% 64/72 [02:53<00:10, 1.60s/it]Case quiz_378: Original shape (91, 102, 168), padded to [128, 128, 192]
+Case quiz_378: Classification probabilities = [3.5061392e-09 9.9999964e-01 3.9897171e-07], predicted class = 1, confidence = 1.0000
+Processing test files:  90% 65/72 [02:54<00:08, 1.58s/it]Case quiz_095: Original shape (43, 113, 166), padded to [64, 128, 192]
+Case quiz_095: Classification probabilities = [3.5828105e-08 9.9999797e-01 1.9947297e-06], predicted class = 1, confidence = 1.0000
+Processing test files:  92% 66/72 [02:56<00:07, 1.57s/it]Case quiz_068: Original shape (42, 123, 191), padded to [64, 128, 192]
+Case quiz_068: Classification probabilities = [1.9182189e-06 9.9994898e-01 4.9086528e-05], predicted class = 1, confidence = 0.9999
+Processing test files:  93% 67/72 [02:57<00:05, 1.55s/it]Case quiz_282: Original shape (50, 139, 164), padded to [64, 192, 192]
+Case quiz_282: Classification probabilities = [1.8552937e-07 9.9994731e-01 5.2456755e-05], predicted class = 1, confidence = 0.9999
+Processing test files:  94% 68/72 [02:59<00:04, 1.54s/it]Case quiz_521: Original shape (57, 151, 191), padded to [64, 192, 192]
+Case quiz_521: Classification probabilities = [2.2164904e-06 9.9994576e-01 5.2048450e-05], predicted class = 1, confidence = 0.9999
+Processing test files:  96% 69/72 [03:01<00:03, 1.53s/it]Case quiz_238: Original shape (63, 89, 215), padded to [64, 128, 256]
+Case quiz_238: Classification probabilities = [7.7787101e-09 9.9999964e-01 3.8972954e-07], predicted class = 1, confidence = 1.0000
+Processing test files:  97% 70/72 [03:02<00:01, 1.52s/it]Case quiz_361: Original shape (97, 137, 197), padded to [128, 192, 256]
+Case quiz_361: Classification probabilities = [1.3176514e-10 1.0000000e+00 1.3129063e-08], predicted class = 1, confidence = 1.0000
+Processing test files:  99% 71/72 [03:04<00:00, 1.51s/it]Case quiz_408: Original shape (63, 190, 302), padded to [64, 192, 320]
+Case quiz_408: Classification probabilities = [1.1317375e-05 3.2867595e-10 9.9998868e-01], predicted class = 2, confidence = 1.0000
+Processing test files: 100% 72/72 [03:06<00:00, 2.58s/it]
+Final class distribution: [2, 61, 9]
+Copying results from /tmp/inference_results to /content/gdrive/MyDrive/PancreasCancerFinal/output/inference_results
+Inference completed in 150.37 seconds
+Average time per case: 2.09 seconds
+Results saved to /content/gdrive/MyDrive/PancreasCancerFinal/output/inference_results
+Inference completed successfully. Results saved to /content/gdrive/MyDrive/PancreasCancerFinal/output/inference_results
+
+Pipeline completed successfully!
