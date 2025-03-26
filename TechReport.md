@@ -8,9 +8,9 @@ This report details the Shuolin Yin's implementation of a multi-task deep learni
 
 Github Repo: https://github.com/leoyin1127/MultitasknnUNetv2
 
-- Whole pancreas (normal pancreas + lesion) DSC: 0.9128 (target ≥0.91) ✅
-- Pancreas lesion DSC: 0.8163 (target ≥0.31) ✅
-- Classification macro-average F1 score: 0.8165 (target ≥0.7) ✅
+- Whole pancreas (normal pancreas + lesion) DSC: 0.9128 (target ≥0.91) √
+- Pancreas lesion DSC: 0.8163 (target ≥0.31) √
+- Classification macro-average F1 score: 0.8165 (target ≥0.7) √
 
 Additionally, the implementation includes several optimizations should successfully reduce inference time by more than 10% compared to the default nnUNetv2 implementation. Please see sections below for more details.
 
@@ -97,13 +97,17 @@ class MultitaskUNet(nn.Module):
         bottleneck_dim = 320  # Default fallback
         
         # Try to determine bottleneck channels from network architecture
-        if hasattr(base_network, 'encoder') and hasattr(base_network.encoder, 'stages'):
+        if hasattr(base_network, 'encoder') and hasattr(
+            base_network.encoder, 
+            'stages'):
+
             encoder = base_network.encoder
             if len(encoder.stages) > 0:
                 bottleneck_dim = encoder.stages[-1].output_channels
         
         # Create classification head
-        self.classification_head = ClassificationHead(bottleneck_dim, num_classes)
+        self.classification_head = ClassificationHead(bottleneck_dim, 
+                                                      num_classes)
 
 ```
 
@@ -116,7 +120,9 @@ class MultitaskUNet(nn.Module):
 ```python
 
 class ClassificationHead(nn.Module):
-    def __init__(self, in_channels: int, num_classes: int = 3, dropout_rate: float = 0.3):
+    def __init__(self, in_channels: int, num_classes: int = 3, 
+                dropout_rate: float = 0.3):
+
         super(ClassificationHead, self).__init__()
         
         # Global average pooling to reduce spatial dimensions
@@ -154,7 +160,7 @@ def forward(self, x: torch.Tensor) -> torch.Tensor:
         seg_output = self.base_network(x)
 
         # Run classification with very minimal backprop impact
-        with torch.set_grad_enabled(False):  # No gradients for encoder during classification
+        with torch.set_grad_enabled(False):
             if hasattr(self.base_network, 'encoder'):
                 encoder_features = self.base_network.encoder(x)
                 
@@ -162,11 +168,13 @@ def forward(self, x: torch.Tensor) -> torch.Tensor:
                     bottleneck_features = encoder_features[-1]
                 else:
                     bottleneck_features = encoder_features
+
+                # Explicit detach
+                self.bottleneck_features = bottleneck_features.detach() 
                 
-                self.bottleneck_features = bottleneck_features.detach()  # Explicit detach
-                
-                # Run classification on detached features (no gradient to encoder)
-                self.last_classification_output = self.classification_head(self.bottleneck_features)
+                # Run classification on detached features
+                self.last_classification_output = \
+                    self.classification_head(self.bottleneck_features)
 
 ```
 
@@ -209,11 +217,14 @@ The `MultitasknnUNetTrainer` class implements a sophisticated multi-phase traini
    ```python
 
    # Phase 1: Focus on segmentation with minimal classification impact
-   with torch.set_grad_enabled(False):  # No gradients for encoder during classification
+   # No gradients for encoder during classification
+   with torch.set_grad_enabled(False):  
        encoder_features = self.base_network.encoder(x)
        bottleneck_features = encoder_features[-1]
-       self.bottleneck_features = bottleneck_features.detach()  # Explicit detach
-       self.last_classification_output = self.classification_head(self.bottleneck_features)
+        # Explicit detach
+       self.bottleneck_features = bottleneck_features.detach() 
+       self.last_classification_output = self.classification_head(
+        self.bottleneck_features)
 
    ```
 
@@ -224,9 +235,11 @@ The `MultitasknnUNetTrainer` class implements a sophisticated multi-phase traini
 
    # Combined loss with phase-dependent weighting
    if self.current_phase == 1:
-       loss = seg_loss + self.cls_weight * cls_loss  # cls_weight = 0.01
+        # cls_weight = 0.01    
+       loss = seg_loss + self.cls_weight * cls_loss 
    else:
-       loss = seg_loss + self.phase2_cls_weight * cls_loss  # phase2_cls_weight = 0.1
+        # phase2_cls_weight = 0.1
+       loss = seg_loss + self.phase2_cls_weight * cls_loss
 
    ```
 
@@ -240,7 +253,8 @@ The `MultitasknnUNetTrainer` class implements a sophisticated multi-phase traini
        # Inverse frequency weighting with smoothing
        class_weights = 1.0 / (self.class_counts + 1)
        class_weights = class_weights / class_weights.sum()
-       cls_loss = F.cross_entropy(cls_output, cls_target, weight=class_weights)
+       cls_loss = F.cross_entropy(cls_output, cls_target, 
+                                  weight=class_weights)
 
    ```
 
@@ -255,7 +269,8 @@ The `MultitasknnUNetTrainer` class implements a sophisticated multi-phase traini
        cls_weight = 0.1
    else:
        # Gradually balance as training progresses
-       seg_weight = max(0.5, 0.9 - 0.4 * (current_epoch_number - self.segmentation_phase_epochs) / 
+       seg_weight = max(0.5, 0.9 - 0.4 * (current_epoch_number - 
+        self.segmentation_phase_epochs) / 
                         (50 - self.segmentation_phase_epochs))
        cls_weight = 1.0 - seg_weight
    
@@ -318,7 +333,8 @@ The implementation includes an optimized inference pipeline with several key enh
            encoder_features = self.base_network.encoder(x)
            bottleneck_features = encoder_features[-1]
            self.bottleneck_features = bottleneck_features
-           self.last_classification_output = self.classification_head(bottleneck_features)
+           self.last_classification_output = \
+            self.classification_head(bottleneck_features)
 
    ```
 
@@ -345,7 +361,8 @@ The implementation includes an optimized inference pipeline with several key enh
    
    # Calculate padding to make dimensions divisible
    for i, dim_size in enumerate(image_data.shape):
-       needed_size = int(np.ceil(dim_size / divisibility_factor[i]) * divisibility_factor[i])
+       needed_size = int(np.ceil(dim_size / divisibility_factor[i]) * 
+                         divisibility_factor[i])
        padded_shape.append(needed_size)
        
        # Calculate padding (before and after)
@@ -431,7 +448,7 @@ These inference optimizations collectively enable >10% faster processing while m
 
 ![Training Progress](https://github.com/leoyin1127/MultitasknnUNetv2/blob/main/progress.png?raw=true "Visualization of Validation")
 
-Analyzing the training progress charts reveals several patterns:
+Analyzing the training progress charts [Figure 1] reveals several patterns:
 
 1. **Loss and Performance Metrics (Top Graph)**
    - **Training Loss (blue)**: Shows rapid initial decrease followed by steady optimization
@@ -459,25 +476,29 @@ Analyzing the training progress charts reveals several patterns:
 The model reaches its best performance at epoch 296:
 
 ```
+
 EPOCH 296 SUMMARY: 
-Whole pancreas DSC: 0.9128 / 0.91 ✅
-Pancreas lesion DSC: 0.8163 / 0.31 ✅
-Classification F1: 0.8165 (Target: ≥0.7) ✅
+Whole pancreas DSC: 0.9128 / 0.91 √
+Pancreas lesion DSC: 0.8163 / 0.31 √
+Classification F1: 0.8165 (Target: ≥0.7) √
 Classification Accuracy: 0.8200
-Requirements: Pancreas: ✅ | Lesion: ✅ | Classification: ✅
+Requirements: Pancreas: √ | Lesion: √ | Classification: √
 Combined metric: 0.8405 (Seg weight: 0.50, Cls weight: 0.50)
+
 ```
 
 By the final epoch (499), metrics showed some degradation in classification performance:
 
 ```
+
 EPOCH 499 SUMMARY: 
-Whole pancreas DSC: 0.9179 / 0.91 ✅
-Pancreas lesion DSC: 0.7988 / 0.31 ✅
-Classification F1: 0.6157 (Target: ≥0.7) ❌
+Whole pancreas DSC: 0.9179 / 0.91 √
+Pancreas lesion DSC: 0.7988 / 0.31 √
+Classification F1: 0.6157 (Target: ≥0.7) X
 Classification Accuracy: 0.6100
-Requirements: Pancreas: ✅ | Lesion: ✅ | Classification: ❌
+Requirements: Pancreas: √ | Lesion: √ | Classification: X
 Combined metric: 0.7370 (Seg weight: 0.50, Cls weight: 0.50)
+
 ```
 
 This comparison reveals that while segmentation performance remained strong throughout training, the classification task experienced significant degradation (~24.5% decline in F1 score) in later epochs, suggesting potential overfitting or task competition issues.
