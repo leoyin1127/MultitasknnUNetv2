@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
-Modified pipeline script for pancreatic cancer segmentation and classification
-with custom preprocessing to force using the original validation set
+pipeline script for pancreatic cancer segmentation and classification
+This script prepares the dataset, runs training, and performs inference using nnUNetv2.
+It includes functions for setting up the environment, preparing the dataset,
+fixing label files, and running the training and inference processes.
+The script is designed to be run from the command line with various options for customization.
 """
 
 import os
@@ -407,306 +410,6 @@ def copy_dataset_json_to_results(task_id, configuration, trainer, plans):
         print(f"Source dataset.json not found at {source_path}")
         return False
 
-
-
-
-def run_optimized_inference(
-    task_id=900,
-    test_folder="/content/gdrive/MyDrive/PancreasCancerFinal/dataset/test",
-    output_folder="/content/gdrive/MyDrive/PancreasCancerFinal/output/inference_results",
-    fold=0
-):
-    """
-    Fixed whole-image inference with proper padding to handle
-    UNet architecture requirements for divisibility
-    """
-    import os
-    import time
-    import torch
-    import torch.nn.functional as F
-    import numpy as np
-    import SimpleITK as sitk
-    from batchgenerators.utilities.file_and_folder_operations import join, maybe_mkdir_p
-    from tqdm import tqdm
-    import csv
-    import matplotlib.pyplot as plt
-    import shutil
-
-    torch._dynamo.disable()
-
-    print("Starting fixed whole-image inference for A100 GPU...")
-    start_time = time.time()
-
-    # Create output directories
-    maybe_mkdir_p(output_folder)
-    local_output = "/tmp/inference_results"
-    maybe_mkdir_p(local_output)
-
-    # Get device - force CUDA for A100
-    device = torch.device("cuda")
-    print(f"Using device: {device}")
-
-
-
-    # Setup paths
-    nnunet_results = os.environ.get("nnUNet_results", "/content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_results")
-    model_folder = join(nnunet_results, f"Dataset{task_id:03d}_PancreasCancer/MultitasknnUNetTrainer__nnUNetResEncUNetMPlans__3d_fullres")
-    fold_dir = join(model_folder, f"fold_{fold}")
-
-    # Import necessary modules
-    import sys
-    sys.path.append(os.getcwd())
-    from multitask_trainer import MultitasknnUNetTrainer
-    from batchgenerators.utilities.file_and_folder_operations import load_json
-
-    # Load configuration files
-    print("Loading configuration files...")
-    dataset_json_file = join(model_folder, "dataset.json")
-    plans_file = join(model_folder, "plans.json")
-
-    try:
-        dataset_json = load_json(dataset_json_file)
-        plans = load_json(plans_file)
-    except:
-        # Fallback paths
-        nnunet_raw = os.environ.get("nnUNet_raw", "/content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_raw")
-        nnunet_preprocessed = os.environ.get("nnUNet_preprocessed", "/content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed")
-
-        dataset_name = f"Dataset{task_id:03d}_PancreasCancer"
-        dataset_json_file = join(nnunet_raw, dataset_name, "dataset.json")
-        plans_file = join(nnunet_preprocessed, dataset_name, "nnUNetResEncUNetMPlans.json")
-
-        print(f"Using fallback paths: {dataset_json_file}, {plans_file}")
-        dataset_json = load_json(dataset_json_file)
-        plans = load_json(plans_file)
-
-    # Initialize trainer
-    print("Initializing trainer...")
-    trainer = MultitasknnUNetTrainer(
-        plans=plans,
-        configuration="3d_fullres",
-        fold=fold,
-        dataset_json=dataset_json,
-        device=device
-    )
-
-    # Initialize network
-    print("Initializing network...")
-    trainer.initialize()
-
-    # Load checkpoint with error handling
-    checkpoint_file = join(fold_dir, "checkpoint_best.pth")
-    if not os.path.exists(checkpoint_file):
-        checkpoint_file = join(fold_dir, "checkpoint_final.pth")
-
-    print(f"Loading checkpoint: {checkpoint_file}")
-
-    try:
-        # FIX: Add all numpy-related types to safe globals
-        import torch.serialization
-        import numpy as np
-        from numpy import dtype, ndarray, float32, float64, int64, int32, uint8, bool_
-
-        # Add numpy types to safe globals
-        torch.serialization.add_safe_globals([
-            dtype, ndarray, float32, float64, int32, int64, uint8, bool_,
-            np.dtype, np.ndarray, np.float32, np.float64, np.int32, np.int64, np.uint8, np.bool_
-        ])
-
-        # Try with weights_only=False explicitly
-        checkpoint = torch.load(checkpoint_file, map_location=device, weights_only=False)
-
-        if isinstance(checkpoint, dict) and "network_weights" in checkpoint:
-            trainer.network.load_state_dict(checkpoint["network_weights"])
-        else:
-            trainer.network.load_state_dict(checkpoint)
-
-        print("Checkpoint loaded successfully")
-    except Exception as e:
-        print(f"Error loading checkpoint: {e}")
-        raise RuntimeError("Failed to load checkpoint - cannot proceed")
-
-    # Set network to evaluation mode
-    trainer.network.eval()
-
-    # Enable fast inference mode if available
-    if hasattr(trainer.network, 'enable_fast_inference'):
-        trainer.network.enable_fast_inference()
-        print("Enabled fast inference mode")
-
-    # Get expected input size from network - IMPORTANT FOR PROPER PADDING
-    if hasattr(trainer.configuration_manager, 'patch_size'):
-        patch_size = trainer.configuration_manager.patch_size
-    else:
-        # Default patch size if not available
-        patch_size = np.array([64, 64, 64])
-
-    # Calculate required divisibility for the network
-    # This depends on the number of pooling operations
-    if hasattr(trainer.configuration_manager, 'pool_op_kernel_sizes'):
-        pool_op_kernel_sizes = trainer.configuration_manager.pool_op_kernel_sizes
-        num_pool_per_axis = [len(pool_op_kernel_sizes) for _ in range(3)]
-    else:
-        # Default to 5 downsampling operations if not available
-        num_pool_per_axis = [5, 5, 5]
-
-    # Calculate divisibility factor for each dimension
-    divisibility_factor = [2 ** num_pool for num_pool in num_pool_per_axis]
-    print(f"Network requires input dimensions divisible by: {divisibility_factor}")
-
-    # Find test files
-    if os.path.isdir(test_folder):
-        test_files = [join(test_folder, f) for f in os.listdir(test_folder) if f.endswith('_0000.nii.gz')]
-        if not test_files:
-            test_files = [join(test_folder, f) for f in os.listdir(test_folder) if f.endswith('.nii.gz')]
-    else:
-        test_files = [test_folder]
-
-    print(f"Found {len(test_files)} test files")
-
-    # Process test files
-    classification_results = []
-    class_distributions = [0, 0, 0]  # Count of predictions for each class
-
-    for test_file in tqdm(test_files, desc="Processing test files"):
-        # Get case ID
-        base_name = os.path.basename(test_file)
-        if "_0000.nii.gz" in base_name:
-            case_id = base_name.replace("_0000.nii.gz", "")
-        else:
-            case_id = base_name.replace(".nii.gz", "")
-
-        # Load image
-        img = sitk.ReadImage(test_file)
-        spacing = img.GetSpacing()
-        direction = img.GetDirection()
-        origin = img.GetOrigin()
-
-        # Convert to numpy array
-        image_data = sitk.GetArrayFromImage(img)
-        original_shape = image_data.shape
-
-        # Normalize
-        image_data = image_data.astype(np.float32)
-        mean = np.mean(image_data)
-        std = np.std(image_data)
-        if std > 0:
-            image_data = (image_data - mean) / std
-
-        # Calculate padding to make dimensions divisible
-        padded_shape = []
-        pad_amounts = []
-
-        for i, dim_size in enumerate(image_data.shape):
-            # Calculate needed size (next multiple of divisibility factor)
-            needed_size = int(np.ceil(dim_size / divisibility_factor[i]) * divisibility_factor[i])
-            padded_shape.append(needed_size)
-
-            # Calculate padding (before and after)
-            pad_before = (needed_size - dim_size) // 2
-            pad_after = needed_size - dim_size - pad_before
-            pad_amounts.append((pad_before, pad_after))
-
-        print(f"Case {case_id}: Original shape {original_shape}, padded to {padded_shape}")
-
-        # Pad the image
-        padded_image = np.pad(image_data,
-                             ((pad_amounts[0][0], pad_amounts[0][1]),
-                              (pad_amounts[1][0], pad_amounts[1][1]),
-                              (pad_amounts[2][0], pad_amounts[2][1])),
-                             mode='constant', constant_values=0)
-
-        # Convert to tensor and add batch and channel dimensions
-        image_tensor = torch.from_numpy(padded_image).unsqueeze(0).unsqueeze(0).to(device)
-
-        # Process the whole image at once with mixed precision
-        with torch.no_grad():
-            with torch.autocast(device_type='cuda', dtype=torch.float16):
-                try:
-                    # Forward pass
-                    output = trainer.network(image_tensor)
-
-                    # Get segmentation prediction
-                    if isinstance(output, list):
-                        seg_output = output[0]
-                    else:
-                        seg_output = output
-
-                    # Get classification prediction
-                    if hasattr(trainer.network, 'last_classification_output'):
-                        cls_output = trainer.network.last_classification_output
-                        probs = F.softmax(cls_output, dim=1)[0].cpu().numpy()
-                        predicted_class = np.argmax(probs)
-                        confidence = probs[predicted_class]
-                        print(f"Case {case_id}: Classification probabilities = {probs}, predicted class = {predicted_class}, confidence = {confidence:.4f}")
-                    else:
-                        # Try direct classification head access
-                        cls_output = trainer.network.classification_head(trainer.network.bottleneck_features)
-                        probs = F.softmax(cls_output, dim=1)[0].cpu().numpy()
-                        predicted_class = np.argmax(probs)
-                        confidence = probs[predicted_class]
-
-                    # Unpad the segmentation output
-                    seg_output_numpy = torch.argmax(seg_output, dim=1)[0].cpu().numpy()
-
-                    # Unpad to original shape
-                    unpadded_seg = seg_output_numpy[
-                        pad_amounts[0][0]:pad_amounts[0][0]+original_shape[0],
-                        pad_amounts[1][0]:pad_amounts[1][0]+original_shape[1],
-                        pad_amounts[2][0]:pad_amounts[2][0]+original_shape[2]
-                    ]
-
-                except Exception as e:
-                    print(f"Error processing case {case_id}: {e}")
-                    continue
-
-        # Update class distribution
-        class_distributions[predicted_class] += 1
-
-        # Convert segmentation to SimpleITK image
-        seg_itk = sitk.GetImageFromArray(unpadded_seg)
-        seg_itk.SetSpacing(spacing)
-        seg_itk.SetDirection(direction)
-        seg_itk.SetOrigin(origin)
-
-        # Save to output directory
-        local_output_file = join(local_output, f"{case_id}.nii.gz")
-        sitk.WriteImage(seg_itk, local_output_file)
-
-        # Add to classification results
-        classification_results.append((f"{case_id}.nii.gz", predicted_class))
-
-    # Save classification results
-    csv_path = join(local_output, "subtype_results.csv")
-    with open(csv_path, 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(['Names', 'Subtype'])
-        for name, subtype in classification_results:
-            writer.writerow([name, subtype])
-
-    # Visualize class distribution
-    plt.figure(figsize=(10, 6))
-    plt.bar(['Subtype 0', 'Subtype 1', 'Subtype 2'], class_distributions)
-    plt.title('Distribution of Predicted Classes')
-    plt.savefig(join(local_output, 'class_distribution.png'))
-    print(f"Final class distribution: {class_distributions}")
-
-    # Copy files to final destination
-    print(f"Copying results from {local_output} to {output_folder}")
-    for file_name in os.listdir(local_output):
-        src_file = join(local_output, file_name)
-        dst_file = join(output_folder, file_name)
-        shutil.copy2(src_file, dst_file)
-
-    # Report timing
-    end_time = time.time()
-    total_time = end_time - start_time
-    print(f"Inference completed in {total_time:.2f} seconds")
-    print(f"Average time per case: {total_time/len(test_files):.2f} seconds")
-    print(f"Results saved to {output_folder}")
-
-    return True
-
 def main():
     parser = argparse.ArgumentParser(description="Run the complete pipeline for pancreatic cancer segmentation and classification")
     parser.add_argument("--base_dir", type=str, required=True, help="Base directory containing dataset and for outputs")
@@ -782,11 +485,15 @@ def main():
 
             # Run inference (use only fold 0 which has our custom train/validation split)
 
-            inference_success = run_optimized_inference(
+            # Import the new inference function
+            from inference import inference
+
+            inference_success = inference(
                   task_id=900,
-                  test_folder="/content/gdrive/MyDrive/PancreasCancerFinal/dataset/test",
-                  output_folder="/content/gdrive/MyDrive/PancreasCancerFinal/output/inference_results",
-                  fold=0
+                  test_folder=test_input,
+                  output_folder=test_output,
+                  fold=0,
+                  checkpoint_name="checkpoint_best.pth"
             )
 
             if inference_success:

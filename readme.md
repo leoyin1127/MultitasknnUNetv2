@@ -111,7 +111,13 @@ Evaluation metrics used in this project:
 
 To evaluate results:
 
-Since the GT for the test data is not provided, thus the evaluation might not be applicable
+```bash
+python evaluation.py \
+    --validation_data /path/to/gt/directory \
+    --prediction_folder /path/to/validation/data/directory \
+    --prediction_csv /path/to/validation/data/directory/subtype_results.csv \
+    --output_folder /path/to/output/directory
+```
 
 ## Results
 
