@@ -1,0 +1,134 @@
+Starting validation of improvements...
+
+Evaluating segmentation performance...
+Found 3 subtype directories
+Found 36 ground truth segmentation files
+File: quiz_1_093.nii.gz
+  Whole pancreas Dice: 0.9062
+  Lesion Dice: 0.8071
+File: quiz_1_090.nii.gz
+  Whole pancreas Dice: 0.8602
+  Lesion Dice: 0.1458
+File: quiz_1_213.nii.gz
+  Whole pancreas Dice: 0.9349
+  Lesion Dice: 0.8617
+File: quiz_1_211.nii.gz
+  Whole pancreas Dice: 0.9075
+  Lesion Dice: 0.7696
+File: quiz_1_242.nii.gz
+  Whole pancreas Dice: 0.9509
+  Lesion Dice: 0.0000
+File: quiz_1_335.nii.gz
+  Whole pancreas Dice: 0.9144
+  Lesion Dice: 0.8271
+File: quiz_1_166.nii.gz
+  Whole pancreas Dice: 0.9442
+  Lesion Dice: 0.9230
+File: quiz_1_331.nii.gz
+  Whole pancreas Dice: 0.9215
+  Lesion Dice: 0.3948
+File: quiz_1_164.nii.gz
+  Whole pancreas Dice: 0.9048
+  Lesion Dice: 0.9197
+File: quiz_1_154.nii.gz
+  Whole pancreas Dice: 0.8851
+  Lesion Dice: 0.7190
+File: quiz_1_158.nii.gz
+  Whole pancreas Dice: 0.9316
+  Lesion Dice: 0.7825
+File: quiz_1_094.nii.gz
+  Whole pancreas Dice: 0.9539
+  Lesion Dice: 0.4631
+File: quiz_1_231.nii.gz
+  Whole pancreas Dice: 0.9497
+  Lesion Dice: 0.6291
+File: quiz_1_221.nii.gz
+  Whole pancreas Dice: 0.9620
+  Lesion Dice: 0.6255
+File: quiz_1_227.nii.gz
+  Whole pancreas Dice: 0.9246
+  Lesion Dice: 0.0000
+File: quiz_2_241.nii.gz
+  Whole pancreas Dice: 0.9608
+  Lesion Dice: 0.6433
+File: quiz_2_098.nii.gz
+  Whole pancreas Dice: 0.9236
+  Lesion Dice: 0.8653
+File: quiz_2_364.nii.gz
+  Whole pancreas Dice: 0.8584
+  Lesion Dice: 0.8171
+File: quiz_2_377.nii.gz
+  Whole pancreas Dice: 0.8947
+  Lesion Dice: 0.8517
+File: quiz_2_084.nii.gz
+  Whole pancreas Dice: 0.9345
+  Lesion Dice: 0.6976
+File: quiz_2_191.nii.gz
+  Whole pancreas Dice: 0.6785
+  Lesion Dice: 0.0000
+File: quiz_2_085.nii.gz
+  Whole pancreas Dice: 0.9457
+  Lesion Dice: 0.8234
+File: quiz_2_089.nii.gz
+  Whole pancreas Dice: 0.8934
+  Lesion Dice: 0.7938
+File: quiz_2_074.nii.gz
+  Whole pancreas Dice: 0.9506
+  Lesion Dice: 0.8863
+File: quiz_2_379.nii.gz
+  Whole pancreas Dice: 0.9581
+  Lesion Dice: 0.8720
+File: quiz_2_080.nii.gz
+  Whole pancreas Dice: 0.9461
+  Lesion Dice: 0.0806
+File: quiz_2_088.nii.gz
+  Whole pancreas Dice: 0.8942
+  Lesion Dice: 0.0000
+File: quiz_0_184.nii.gz
+  Whole pancreas Dice: 0.9368
+  Lesion Dice: 0.9192
+File: quiz_0_189.nii.gz
+  Whole pancreas Dice: 0.9463
+  Lesion Dice: 0.9051
+File: quiz_0_244.nii.gz
+  Whole pancreas Dice: 0.9332
+  Lesion Dice: 0.4969
+File: quiz_0_174.nii.gz
+  Whole pancreas Dice: 0.8717
+  Lesion Dice: 0.1693
+File: quiz_0_253.nii.gz
+  Whole pancreas Dice: 0.9456
+  Lesion Dice: 0.3427
+File: quiz_0_171.nii.gz
+  Whole pancreas Dice: 0.9139
+  Lesion Dice: 0.7510
+File: quiz_0_168.nii.gz
+  Whole pancreas Dice: 0.8650
+  Lesion Dice: 0.0117
+File: quiz_0_254.nii.gz
+  Whole pancreas Dice: 0.9276
+  Lesion Dice: 0.1686
+File: quiz_0_187.nii.gz
+  Whole pancreas Dice: 0.9437
+  Lesion Dice: 0.6965
+
+Average Whole Pancreas Dice: 0.9159
+Average Lesion Dice: 0.5739
+
+Evaluating classification performance...
+Found ground truth classes for 36 cases
+Loaded 36 predictions from CSV
+Matched 36 cases between ground truth and predictions
+Classification Accuracy: 0.6944
+Classification F1 Score: 0.7037
+Confusion Matrix:
+[[ 7  2  0]
+ [ 1 10  4]
+ [ 1  3  8]]
+
+Generating visualizations...
+/content/evaluation.py:185: MatplotlibDeprecationWarning: The 'labels' parameter of boxplot() has been renamed 'tick_labels' since Matplotlib 3.9; support for the old name will be dropped in 3.11.
+  ax[0].boxplot([seg_metrics["individual_whole_dices"], seg_metrics["individual_lesion_dices"]],
+Visualization saved to ./validation_report
+
+Validation complete!
