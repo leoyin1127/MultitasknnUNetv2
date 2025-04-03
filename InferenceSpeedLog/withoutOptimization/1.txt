@@ -1,0 +1,469 @@
+========== FINAL INFERENCE PIPELINE ==========
+Test folder:      /content/gdrive/MyDrive/PancreasCancerFinal/dataset/validation/
+Output folder:    /content/gdrive/MyDrive/PancreasCancerFinal/results_test3
+Fold:             0
+Checkpoint:       checkpoint_best.pth
+=================================================
+
+Successfully imported MultitasknnUNetTrainer
+Searching for quiz files in: /content/gdrive/MyDrive/PancreasCancerFinal/dataset/validation
+Found 36 quiz files for final inference.
+Loading plans from:   /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_results/Dataset900_PancreasCancer/MultitasknnUNetTrainer__nnUNetResEncUNetMPlans__3d_fullres/plans.json
+Loading dataset from: /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_results/Dataset900_PancreasCancer/MultitasknnUNetTrainer__nnUNetResEncUNetMPlans__3d_fullres/dataset.json
+Using <class 'nnunetv2.imageio.simpleitk_reader_writer.SimpleITKIO'> as reader/writer
+Inference device: cuda
+Loading the MultitasknnUNetTrainer for final inference...
+Using device: cuda:0
+
+#######################################################################
+Please cite the following paper when using nnU-Net:
+Isensee, F., Jaeger, P. F., Kohl, S. A., Petersen, J., & Maier-Hein, K. H. (2021). nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation. Nature methods, 18(2), 203-211.
+#######################################################################
+
+2025-04-02 10:49:05.185890: ==================================================
+2025-04-02 10:49:05.188730: MultitasknnUNetTrainer for pancreatic cancer
+2025-04-02 10:49:05.190850: ==================================================
+2025-04-02 10:49:05.192923: Expected performance:
+2025-04-02 10:49:05.194970: - Whole pancreas DSC: ~0.91+
+2025-04-02 10:49:05.197001: - Pancreas lesion DSC: ≥0.31
+2025-04-02 10:49:05.199317: - Classification macro F1: ≥0.7
+2025-04-02 10:49:05.201393: ==================================================
+2025-04-02 10:49:08.929486: Using torch.compile...
+2025-04-02 10:49:14.180883: Initializing MultitasknnUNetTrainer...
+2025-04-02 10:49:14.285906: Preprocessed dataset base: /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed/Dataset900_PancreasCancer
+2025-04-02 10:49:14.290154: Using preprocessed folder: /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed/Dataset900_PancreasCancer/nnUNetPlans_3d_fullres
+2025-04-02 10:49:14.293548: Loading validation keys from /content/gdrive/MyDrive/PancreasCancerFinal/output/nnUNet_preprocessed/Dataset900_PancreasCancer/splits_final.json
+2025-04-02 10:49:15.366347: Loaded 36 validation keys from splits file
+2025-04-02 10:49:15.369749: Validation keys examples: ['quiz_0_254', 'quiz_0_187', 'quiz_0_244', 'quiz_0_184', 'quiz_0_171']
+2025-04-02 10:49:15.372324: Extracting subtypes from case naming patterns
+2025-04-02 10:49:15.374768: Created 36 case-to-subtype mappings
+2025-04-02 10:49:15.377491: Mapping examples: [('quiz_0_254', 0), ('quiz_0_187', 0), ('quiz_0_244', 0), ('quiz_0_184', 0), ('quiz_0_171', 0)]
+2025-04-02 10:49:15.380650: Class distribution: Subtype 0: 9, Subtype 1: 15, Subtype 2: 12
+[MultitaskUNet] Detected bottleneck dimension: 320
+[MultitaskUNet] Initialized with improved gradient isolation
+[MultitaskUNet] Classification head input dimensions: 320
+[MultitaskUNet] Set training phase to 1
+2025-04-02 10:49:15.403677: Multitask initialization complete.
+Loading checkpoint...
+Checkpoint loaded successfully.
+Checkpoint weights loaded into trainer network.
+Disabled deep supervision for inference.
+Enabled fast inference mode.
+Using 4 preprocessing threads and 4 export threads
+
+Running refined inference on quiz cases...
+Final Inference:   0% 0/36 [00:00<?, ?it/s]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_090.nii.gz:
+perform_everything_on_device: True
+
+  0% 0/4 [00:00<?, ?it/s]
+100% 4/4 [00:43<00:00, 10.80s/it]
+sending off prediction to background worker for resampling and export
+done with quiz_1_090.nii.gz
+Case quiz_1_090: predicted class 1
+Final Inference:   3% 1/36 [00:54<31:46, 54.47s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_211.nii.gz:
+perform_everything_on_device: True
+
+  0% 0/4 [00:00<?, ?it/s]
+100% 4/4 [00:00<00:00, 25.79it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_211.nii.gz
+Case quiz_1_211: predicted class 2
+Final Inference:   6% 2/36 [01:05<16:19, 28.82s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_213.nii.gz:
+perform_everything_on_device: True
+
+100% 1/1 [00:00<00:00, 24.84it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_213.nii.gz
+Case quiz_1_213: predicted class 2
+Final Inference:   8% 3/36 [01:15<11:15, 20.46s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_164.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 29.12it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_164.nii.gz
+Case quiz_1_164: predicted class 1
+Final Inference:  11% 4/36 [01:25<08:35, 16.12s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_158.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 29.47it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_158.nii.gz
+Case quiz_1_158: predicted class 1
+Final Inference:  14% 5/36 [01:35<07:08, 13.83s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_221.nii.gz:
+perform_everything_on_device: True
+
+100% 1/1 [00:00<00:00, 24.44it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_221.nii.gz
+Case quiz_1_221: predicted class 1
+Final Inference:  17% 6/36 [01:45<06:17, 12.57s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_166.nii.gz:
+perform_everything_on_device: True
+
+100% 1/1 [00:00<00:00, 24.53it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_166.nii.gz
+Case quiz_1_166: predicted class 1
+Final Inference:  19% 7/36 [01:55<05:42, 11.81s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_331.nii.gz:
+perform_everything_on_device: True
+
+  0% 0/8 [00:00<?, ?it/s]
+ 38% 3/8 [00:00<00:00, 27.86it/s]
+100% 8/8 [00:00<00:00, 25.00it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_331.nii.gz
+Case quiz_1_331: predicted class 1
+Final Inference:  22% 8/36 [02:08<05:37, 12.06s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_335.nii.gz:
+perform_everything_on_device: True
+
+100% 1/1 [00:00<00:00, 24.77it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_335.nii.gz
+Case quiz_1_335: predicted class 1
+Final Inference:  25% 9/36 [02:19<05:17, 11.76s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_231.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 31.56it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_231.nii.gz
+Case quiz_1_231: predicted class 1
+Final Inference:  28% 10/36 [02:30<04:59, 11.51s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_093.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 30.65it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_093.nii.gz
+Case quiz_1_093: predicted class 2
+Final Inference:  31% 11/36 [02:41<04:47, 11.51s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_242.nii.gz:
+perform_everything_on_device: True
+
+  0% 0/4 [00:00<?, ?it/s]
+100% 4/4 [00:00<00:00, 25.83it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_242.nii.gz
+Case quiz_1_242: predicted class 1
+Final Inference:  33% 12/36 [02:57<05:05, 12.74s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_154.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 29.56it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_154.nii.gz
+Case quiz_1_154: predicted class 1
+Final Inference:  36% 13/36 [03:09<04:51, 12.67s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_227.nii.gz:
+perform_everything_on_device: True
+
+100% 1/1 [00:00<00:00, 22.91it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_227.nii.gz
+Case quiz_1_227: predicted class 0
+Final Inference:  39% 14/36 [03:21<04:33, 12.42s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_1_094.nii.gz:
+perform_everything_on_device: True
+
+100% 1/1 [00:00<00:00, 25.94it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_1_094.nii.gz
+Case quiz_1_094: predicted class 2
+Final Inference:  42% 15/36 [03:31<04:07, 11.77s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_364.nii.gz:
+perform_everything_on_device: True
+
+100% 1/1 [00:00<00:00, 24.70it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_364.nii.gz
+Case quiz_2_364: predicted class 2
+Final Inference:  44% 16/36 [03:41<03:43, 11.16s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_191.nii.gz:
+perform_everything_on_device: True
+
+  0% 0/8 [00:00<?, ?it/s]
+ 38% 3/8 [00:00<00:00, 27.74it/s]
+100% 8/8 [00:00<00:00, 25.27it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_191.nii.gz
+Case quiz_2_191: predicted class 2
+Final Inference:  47% 17/36 [03:53<03:38, 11.50s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_085.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 30.15it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_085.nii.gz
+Case quiz_2_085: predicted class 1
+Final Inference:  50% 18/36 [04:03<03:14, 10.81s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_377.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 31.34it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_377.nii.gz
+Case quiz_2_377: predicted class 2
+Final Inference:  53% 19/36 [04:15<03:10, 11.22s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_084.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 29.76it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_084.nii.gz
+Case quiz_2_084: predicted class 2
+Final Inference:  56% 20/36 [04:26<02:59, 11.25s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_241.nii.gz:
+perform_everything_on_device: True
+
+  0% 0/4 [00:00<?, ?it/s]
+100% 4/4 [00:00<00:00, 25.77it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_241.nii.gz
+Case quiz_2_241: predicted class 2
+Final Inference:  58% 21/36 [04:38<02:51, 11.42s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_098.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 30.94it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_098.nii.gz
+Case quiz_2_098: predicted class 0
+Final Inference:  61% 22/36 [04:48<02:34, 11.03s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_074.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 31.29it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_074.nii.gz
+Case quiz_2_074: predicted class 1
+Final Inference:  64% 23/36 [05:01<02:30, 11.56s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_089.nii.gz:
+perform_everything_on_device: True
+
+100% 1/1 [00:00<00:00, 25.21it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_089.nii.gz
+Case quiz_2_089: predicted class 2
+Final Inference:  67% 24/36 [05:11<02:14, 11.22s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_379.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 29.93it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_379.nii.gz
+Case quiz_2_379: predicted class 1
+Final Inference:  69% 25/36 [05:25<02:11, 11.94s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_080.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 31.63it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_080.nii.gz
+Case quiz_2_080: predicted class 2
+Final Inference:  72% 26/36 [05:36<01:55, 11.60s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_2_088.nii.gz:
+perform_everything_on_device: True
+
+  0% 0/8 [00:00<?, ?it/s]
+ 38% 3/8 [00:00<00:00, 27.22it/s]
+100% 8/8 [00:00<00:00, 24.67it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_2_088.nii.gz
+Case quiz_2_088: predicted class 2
+Final Inference:  75% 27/36 [05:48<01:46, 11.80s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_0_254.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 30.55it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_0_254.nii.gz
+Case quiz_0_254: predicted class 0
+Final Inference:  78% 28/36 [05:59<01:31, 11.46s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_0_187.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 31.33it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_0_187.nii.gz
+Case quiz_0_187: predicted class 0
+Final Inference:  81% 29/36 [06:13<01:27, 12.51s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_0_244.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 31.11it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_0_244.nii.gz
+Case quiz_0_244: predicted class 0
+Final Inference:  83% 30/36 [06:24<01:11, 11.93s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_0_184.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 30.62it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_0_184.nii.gz
+Case quiz_0_184: predicted class 0
+Final Inference:  86% 31/36 [06:37<01:00, 12.12s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_0_171.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 29.63it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_0_171.nii.gz
+Case quiz_0_171: predicted class 0
+Final Inference:  89% 32/36 [06:50<00:49, 12.47s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_0_253.nii.gz:
+perform_everything_on_device: True
+
+100% 2/2 [00:00<00:00, 29.77it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_0_253.nii.gz
+Case quiz_0_253: predicted class 0
+Final Inference:  92% 33/36 [07:01<00:35, 11.99s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_0_168.nii.gz:
+perform_everything_on_device: True
+
+  0% 0/4 [00:00<?, ?it/s]
+100% 4/4 [00:00<00:00, 25.79it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_0_168.nii.gz
+Case quiz_0_168: predicted class 1
+Final Inference:  94% 34/36 [07:16<00:25, 12.92s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_0_189.nii.gz:
+perform_everything_on_device: True
+
+100% 1/1 [00:00<00:00, 24.40it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_0_189.nii.gz
+Case quiz_0_189: predicted class 0
+Final Inference:  97% 35/36 [07:28<00:12, 12.69s/it]There are 1 cases in the source folder
+I am process 0 out of 1 (max process ID is 0, we start counting with 0!)
+There are 1 cases that I would like to predict
+
+Predicting quiz_0_174.nii.gz:
+perform_everything_on_device: True
+
+  0% 0/3 [00:00<?, ?it/s]
+100% 3/3 [00:00<00:00, 27.81it/s]
+sending off prediction to background worker for resampling and export
+done with quiz_0_174.nii.gz
+Case quiz_0_174: predicted class 1
+Final Inference: 100% 36/36 [07:42<00:00, 12.84s/it]
+
+Inference results saved to: /content/gdrive/MyDrive/PancreasCancerFinal/results_test3
+Classification written to:  /content/gdrive/MyDrive/PancreasCancerFinal/results_test3/subtype_results.csv
+
+Inference completed in 509.01s
+Average time per case: 14.14s
