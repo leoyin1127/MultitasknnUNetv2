@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Validation script to evaluate the improved inference pipeline
-by comparing segmentation and classification results against ground truth.
-"""
-
 import os
 import sys
 import numpy as np

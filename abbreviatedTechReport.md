@@ -58,5 +58,3 @@ GitHub: [MultitasknnUNetv2](https://github.com/leoyin1127/MultitasknnUNetv2)
 - **Future Directions**:  
   - Adaptive task-weighting, more robust regularization for classification, and automated phase scheduling.  
   - Ensemble strategies to stabilize classification performance over many epochs.
-
-Overall, this multi-task nnUNetv2 architecture meets the project’s requirements for segmentation accuracy and classification F1, while achieving more than a 10% reduction in inference time—making it a strong candidate for real-world pancreatic cancer analysis.
